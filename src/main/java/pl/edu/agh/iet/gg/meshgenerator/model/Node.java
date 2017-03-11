@@ -1,6 +1,9 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+
 import pl.edu.agh.iet.gg.meshgenerator.util.assertion.Assert;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class Node {
 
@@ -27,6 +30,7 @@ public abstract class Node {
 	}
 
 	public Node getNeighbor(Direction direction) {
+		checkArgument(true);
 		Assert.isIndexInBounds(direction.getDirectionIndex(), neighbors.length);
 		return neighbors[direction.getDirectionIndex()];
     }
