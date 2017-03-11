@@ -1,5 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import pl.edu.agh.iet.gg.meshgenerator.util.assertion.Assert;
+
 public abstract class Node {
 
     // TODO 2017-03-11 by bgrochal: These fields are not necessary for visualisation purposes. Remove if you don't need them also.
@@ -25,10 +27,24 @@ public abstract class Node {
 	}
 
 	public Node getNeighbor(Direction direction) {
-        return neighbors[direction.getDirectionIndex()];
+		Assert.isIndexInBounds(direction.getDirectionIndex(), neighbors.length);
+		return neighbors[direction.getDirectionIndex()];
     }
 
+    public I getNeighborAsI(Direction direction) {
+		Node neighbor = getNeighbor(direction);
+		Assert.isInstance(neighbor, I.class);
+		return (I) neighbor;
+	}
+
+	public E getNeighborAsE(Direction direction) {
+		Node neighbor = getNeighbor(direction);
+		Assert.isInstance(neighbor, E.class);
+		return (E) neighbor;
+	}
+
     public void setNeighbor(Direction direction, Node neighbor) {
+		Assert.isIndexInBounds(direction.getDirectionIndex(), neighbors.length);
         neighbors[direction.getDirectionIndex()] = neighbor;
     }
 	
