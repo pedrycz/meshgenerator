@@ -7,7 +7,7 @@ public class Graph {
     private final E root;
 
     public Graph() {
-        this.root = new E();
+        this.root = new E(0,0,0);
     }
 
     public E getRoot() {

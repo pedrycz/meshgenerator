@@ -2,10 +2,27 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import pl.edu.agh.iet.gg.meshgenerator.model.E;
+import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
+import pl.edu.agh.iet.gg.meshgenerator.model.I;
+import pl.edu.agh.iet.gg.meshgenerator.model.ProductionResults;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.factory.EdgeFactory;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.factory.NodeVertexFactory;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.EdgeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.NodePositioningStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.NodeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.impl.ConstantEdgeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.impl.ConstantNodeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.impl.GridPositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.Edge;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.Vertex;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.VerticalEdge;
+
+import java.util.function.Consumer;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author Bartłomiej Grochal
@@ -15,15 +32,54 @@ public class MainWindowController {
     @FXML private RotatableGroup environmentGroup;
     @FXML private Group dynamicGraphGroup;
 
+    private NodeVertexFactory nodeVertexFactory;
+    private EdgeFactory edgeFactory;
+    private Graph graph;
 
     @FXML
     @SuppressWarnings("unused")
     private void initialize() {
+
+        NodePositioningStrategy nodePositioningStrategy = new GridPositioningStrategy();
+        NodeRadiusStrategy nodeRadiusStrategy = new ConstantNodeRadiusStrategy();
+        EdgeRadiusStrategy edgeRadiusStrategy = new ConstantEdgeRadiusStrategy();
+
+        Consumer<E> onEClick = e -> {
+            System.out.println("1");
+            if(e.canApplyP1()) {
+                System.out.println("2");
+                ProductionResults pr = e.applyP1();
+                dynamicGraphGroup.getChildren().addAll(pr.getAddedNodes().stream().map(nodeVertexFactory::getNodeVertex).collect(toList()));
+                dynamicGraphGroup.getChildren().addAll(pr.getAddedEdges().stream().map(edgeFactory::getEdge).collect(toList()));
+            }
+        };
+
+        Consumer<I> onIClick = i -> {
+            if (i.canApplyP2a(i.getNw(), i.getNe())){
+                ProductionResults pr = i.applyP2a(i.getNw(), i.getNe());
+                dynamicGraphGroup.getChildren().addAll(pr.getAddedNodes().stream().map(nodeVertexFactory::getNodeVertex).collect(toList()));
+                dynamicGraphGroup.getChildren().addAll(pr.getAddedEdges().stream().map(edgeFactory::getEdge).collect(toList()));
+            }
+        };
+
+        this.nodeVertexFactory = new NodeVertexFactory(nodePositioningStrategy, nodeRadiusStrategy, onEClick, onIClick);
+        this.edgeFactory = new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy);
+
+        this.graph = new Graph();
+
         environmentGroup.rx.setAngle(-45);
         environmentGroup.ry.setAngle(-45);
         environmentGroup.rz.setAngle(-35);
 
-        createDynamicGraphExample();
+        initializeGraph();
+
+        Edge e = edgeFactory.getEdge(new pl.edu.agh.iet.gg.meshgenerator.model.Edge(new E(-1, 1, 0), new E(1, 1, 0)));
+        dynamicGraphGroup.getChildren().add(e);
+    }
+
+    private void initializeGraph() {
+        Node root = nodeVertexFactory.getNodeVertex(graph.getRoot());
+        dynamicGraphGroup.getChildren().add(root);
     }
 
 

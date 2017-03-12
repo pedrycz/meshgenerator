@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -16,7 +17,9 @@ public class E extends Node {
     private I se; // node on southeast
     private I ne; // node on northeast
 
-    E() {
+    //todo not public
+    public E(int offsetX, int offsetY, int level) {
+        super(offsetX, offsetY, level);
     }
 
     public Optional<I> getBelow() {
@@ -111,26 +114,28 @@ public class E extends Node {
         return ne != null;
     }
 
-    void bidirectionalConnectNorth(E northern) {
+    ProductionResults bidirectionalConnectNorth(E northern) {
         checkState(n == null);
         checkState(northern.s == null);
         n = northern;
         northern.s = this;
+        return new ProductionResults(Collections.singletonList(new Edge(this, northern)));
     }
 
-    void bidirectionalConnectEast(E eastern) {
+    ProductionResults bidirectionalConnectEast(E eastern) {
         checkState(e == null);
         checkState(eastern.w == null);
         e = eastern;
         eastern.w = this;
+        return new ProductionResults(Collections.singletonList(new Edge(this, eastern)));
     }
 
     public boolean canApplyP1() {
         return !isExpanded();
     }
 
-    public void applyP1() {
-        I.createConnectedToNewNodes(this);
+    public ProductionResults applyP1() {
+        return I.createConnectedToNewNodesAndGetChanges(this);
     }
 
 }

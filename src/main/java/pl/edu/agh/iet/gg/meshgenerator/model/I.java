@@ -1,5 +1,9 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import com.google.common.collect.Lists;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -13,7 +17,32 @@ public class I extends Node {
     private final E se; // node on southeast
     private final E ne; // node on northeast
 
+    private static int getOffsetX(E above, E sw) {
+        if (above != null) {
+            return above.getOffsetX() * 2;
+        } else {
+            return sw.getOffsetX() + 1;
+        }
+    }
+
+    private static int getOffsetY(E above, E sw) {
+        if (above != null) {
+            return above.getOffsetY() * 2;
+        } else {
+            return sw.getOffsetY() + 1;
+        }
+    }
+
+    private static int getLevel(E above, E sw) {
+        if (above != null) {
+            return above.getLevel() + 1;
+        } else {
+            return sw.getLevel();
+        }
+    }
+
     private I(E above, E nw, E sw, E se, E ne) {
+        super(getOffsetX(above, sw), getOffsetY(above, sw), getLevel(above, sw));
         checkArgument(!nw.isConnectedSE());
         checkArgument(!sw.isConnectedNE());
         checkArgument(!se.isConnectedNW());
@@ -30,7 +59,6 @@ public class I extends Node {
         sw.setNe(this);
         se.setNw(this);
         ne.setSw(this);
-
     }
 
     private I(E nw, E sw, E se, E ne) {
@@ -75,24 +103,28 @@ public class I extends Node {
                 !northern.getBelow().get().getSw().isConnectedSouth();
     }
 
-    private void applyP2Horizontally(E western, E eastern) {
-        western.getBelow().get().getNe().bidirectionalConnectEast(eastern.getBelow().get().getNw());
-        western.getBelow().get().getSe().bidirectionalConnectEast(eastern.getBelow().get().getSw());
-        new I(
+    private ProductionResults applyP2Horizontally(E western, E eastern) {
+        ProductionResults pr1 = western.getBelow().get().getNe().bidirectionalConnectEast(eastern.getBelow().get().getNw());
+        ProductionResults pr2 = western.getBelow().get().getSe().bidirectionalConnectEast(eastern.getBelow().get().getSw());
+        ProductionResults pr3 = I.createAndGetChanges(
                 western.getBelow().get().getNe(),
                 western.getBelow().get().getSe(),
                 eastern.getBelow().get().getSw(),
                 eastern.getBelow().get().getNw());
+
+        return ProductionResults.merge(pr1, pr2, pr3);
     }
 
-    private void applyP2Vertically(E northern, E southern) {
-        southern.getBelow().get().getNe().bidirectionalConnectNorth(northern.getBelow().get().getSe());
-        southern.getBelow().get().getNw().bidirectionalConnectNorth(northern.getBelow().get().getSw());
-        new I(
+    private ProductionResults applyP2Vertically(E northern, E southern) {
+        ProductionResults pr1 = southern.getBelow().get().getNe().bidirectionalConnectNorth(northern.getBelow().get().getSe());
+        ProductionResults pr2 = southern.getBelow().get().getNw().bidirectionalConnectNorth(northern.getBelow().get().getSw());
+        ProductionResults pr3 = I.createAndGetChanges(
                 northern.getBelow().get().getSw(),
                 southern.getBelow().get().getNw(),
                 southern.getBelow().get().getNe(),
                 southern.getBelow().get().getSe());
+
+        return ProductionResults.merge(pr1, pr2, pr3);
     }
 
     public boolean canApplyP2a(E western, E eastern) {
@@ -119,38 +151,62 @@ public class I extends Node {
                 canApplyP2Vertical(northern, southern);
     }
 
-    public void applyP2a(E western, E eastern) {
+    public ProductionResults applyP2a(E western, E eastern) {
         checkState(canApplyP2a(western, eastern));
-        applyP2Horizontally(western, eastern);
+        return applyP2Horizontally(western, eastern);
     }
 
-    public void applyP2b(E northern, E southern) {
+    public ProductionResults applyP2b(E northern, E southern) {
         checkState(canApplyP2b(northern, southern));
-        applyP2Vertically(northern, southern);
+        return applyP2Vertically(northern, southern);
     }
 
-    public void applyP2c(E western, E eastern) {
+    public ProductionResults applyP2c(E western, E eastern) {
         checkState(canApplyP2c(western, eastern));
-        applyP2Horizontally(western, eastern);
+        return applyP2Horizontally(western, eastern);
     }
 
-    public void applyP2d(E northern, E southern) {
+    public ProductionResults applyP2d(E northern, E southern) {
         checkState(canApplyP2d(northern, southern));
-        applyP2Vertically(northern, southern);
+        return applyP2Vertically(northern, southern);
     }
 
-    static I createConnectedToNewNodes(E above) {
-        E nw = new E();
-        E sw = new E();
-        E se = new E();
-        E ne = new E();
+    private static ProductionResults createAndGetChanges(E above, E nw, E sw, E se, E ne) {
+        I i = new I(above, nw, sw, se, ne);
+        List<Node> nodes = Collections.singletonList(i);
+        List<Edge> edges = Lists.newArrayList(
+                new Edge(nw, i),
+                new Edge(sw, i),
+                new Edge(se, i),
+                new Edge(ne, i)
+        );
+        if (above != null) {
+            edges.add(new Edge(above, i));
+        }
+        return new ProductionResults(nodes, edges);
+    }
 
-        se.bidirectionalConnectNorth(ne);
-        sw.bidirectionalConnectNorth(nw);
-        nw.bidirectionalConnectEast(ne);
-        sw.bidirectionalConnectEast(se);
+    private static ProductionResults createAndGetChanges(E nw, E sw, E se, E ne) {
+        return createAndGetChanges(null, nw, sw, se, ne);
+    }
 
-        return new I(above, nw, sw, se, ne);
+    static ProductionResults createConnectedToNewNodesAndGetChanges(E above) {
+        int iOffxetX = above.getOffsetX() * 2;
+        int iOffxetY = above.getOffsetY() * 2;
+
+        E nw = new E(iOffxetX + 1, iOffxetY - 1, above.getLevel() + 1);
+        E sw = new E(iOffxetX - 1, iOffxetY - 1, above.getLevel() + 1);
+        E se = new E(iOffxetX - 1, iOffxetY + 1, above.getLevel() + 1);
+        E ne = new E(iOffxetX + 1, iOffxetY + 1, above.getLevel() + 1);
+
+        ProductionResults pr1 = se.bidirectionalConnectNorth(ne);
+        ProductionResults pr2 = sw.bidirectionalConnectNorth(nw);
+        ProductionResults pr3 = nw.bidirectionalConnectEast(ne);
+        ProductionResults pr4 = sw.bidirectionalConnectEast(se);
+        ProductionResults pr5 = I.createAndGetChanges(above, nw, sw, se, ne);
+        ProductionResults pr6 = new ProductionResults(Lists.newArrayList(nw, sw, se, ne), Collections.emptyList());
+
+        return ProductionResults.merge(pr1, pr2, pr3, pr4, pr5, pr6);
     }
 
 }
