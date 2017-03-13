@@ -45,9 +45,7 @@ public class MainWindowController {
         EdgeRadiusStrategy edgeRadiusStrategy = new ConstantEdgeRadiusStrategy();
 
         Consumer<E> onEClick = e -> {
-            System.out.println("1");
             if(e.canApplyP1()) {
-                System.out.println("2");
                 ProductionResults pr = e.applyP1();
                 dynamicGraphGroup.getChildren().addAll(pr.getAddedNodes().stream().map(nodeVertexFactory::getNodeVertex).collect(toList()));
                 dynamicGraphGroup.getChildren().addAll(pr.getAddedEdges().stream().map(edgeFactory::getEdge).collect(toList()));
@@ -72,9 +70,6 @@ public class MainWindowController {
         environmentGroup.rz.setAngle(-35);
 
         initializeGraph();
-
-        Edge e = edgeFactory.getEdge(new pl.edu.agh.iet.gg.meshgenerator.model.Edge(new E(-1, 1, 0), new E(1, 1, 0)));
-        dynamicGraphGroup.getChildren().add(e);
     }
 
     private void initializeGraph() {
