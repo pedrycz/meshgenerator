@@ -1,8 +1,8 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 public class E extends Node {
@@ -138,4 +138,32 @@ public class E extends Node {
         return I.createConnectedToNewNodesAndGetChanges(this);
     }
 
+    static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
+        List<E> sorted = Arrays.asList(e1, e2, e3, e4);
+        sorted.sort(Comparator.comparing(E::getOffsetX).thenComparing(E::getOffsetY));
+        E sw = sorted.get(0);
+        E se = sorted.get(1);
+        E nw = sorted.get(2);
+        E ne = sorted.get(3);
+
+        //just in case
+        checkArgument(sw.getOffsetX() + 2 == se.getOffsetX());
+        checkArgument(nw.getOffsetX() + 2 == ne.getOffsetX());
+        checkArgument(sw.getOffsetY() + 2 == nw.getOffsetY());
+        checkArgument(se.getOffsetY() + 2 == ne.getOffsetY());
+
+        //important
+        checkState(sw.getE().map(x -> x.equals(se)).orElseGet(() -> false));
+        checkState(se.getN().map(x -> x.equals(ne)).orElseGet(() -> false));
+        checkState(ne.getW().map(x -> x.equals(nw)).orElseGet(() -> false));
+        checkState(nw.getS().map(x -> x.equals(sw)).orElseGet(() -> false));
+
+        //just in case
+        checkState(sw.getN().map(x -> x.equals(nw)).orElseGet(() -> false));
+        checkState(nw.getE().map(x -> x.equals(ne)).orElseGet(() -> false));
+        checkState(ne.getS().map(x -> x.equals(se)).orElseGet(() -> false));
+        checkState(se.getW().map(x -> x.equals(sw)).orElseGet(() -> false));
+
+        return I.createConnectedToExistingNodesAndGetChanges(nw, sw, se, ne);
+    }
 }

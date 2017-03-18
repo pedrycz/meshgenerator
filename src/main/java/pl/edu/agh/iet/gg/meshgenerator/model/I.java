@@ -106,7 +106,7 @@ public class I extends Node {
     private ProductionResults applyP2Horizontally(E western, E eastern) {
         ProductionResults pr1 = western.getBelow().get().getNe().bidirectionalConnectEast(eastern.getBelow().get().getNw());
         ProductionResults pr2 = western.getBelow().get().getSe().bidirectionalConnectEast(eastern.getBelow().get().getSw());
-        ProductionResults pr3 = I.createAndGetChanges(
+        ProductionResults pr3 = I.createConnectedToExistingNodesAndGetChanges(
                 western.getBelow().get().getNe(),
                 western.getBelow().get().getSe(),
                 eastern.getBelow().get().getSw(),
@@ -118,7 +118,7 @@ public class I extends Node {
     private ProductionResults applyP2Vertically(E northern, E southern) {
         ProductionResults pr1 = southern.getBelow().get().getNe().bidirectionalConnectNorth(northern.getBelow().get().getSe());
         ProductionResults pr2 = southern.getBelow().get().getNw().bidirectionalConnectNorth(northern.getBelow().get().getSw());
-        ProductionResults pr3 = I.createAndGetChanges(
+        ProductionResults pr3 = I.createConnectedToExistingNodesAndGetChanges(
                 northern.getBelow().get().getSw(),
                 southern.getBelow().get().getNw(),
                 southern.getBelow().get().getNe(),
@@ -171,7 +171,11 @@ public class I extends Node {
         return applyP2Vertically(northern, southern);
     }
 
-    private static ProductionResults createAndGetChanges(E above, E nw, E sw, E se, E ne) {
+    private static ProductionResults createConnectedToExistingNodesAndGetChanges(E above, E nw, E sw, E se, E ne) {
+        checkArgument(sw.getE().map(x -> x.equals(se)).orElseGet(() -> false));
+        checkArgument(se.getN().map(x -> x.equals(ne)).orElseGet(() -> false));
+        checkArgument(ne.getW().map(x -> x.equals(nw)).orElseGet(() -> false));
+        checkArgument(nw.getS().map(x -> x.equals(sw)).orElseGet(() -> false));
         I i = new I(above, nw, sw, se, ne);
         List<Node> nodes = Collections.singletonList(i);
         List<Edge> edges = Lists.newArrayList(
@@ -186,8 +190,8 @@ public class I extends Node {
         return new ProductionResults(nodes, edges);
     }
 
-    private static ProductionResults createAndGetChanges(E nw, E sw, E se, E ne) {
-        return createAndGetChanges(null, nw, sw, se, ne);
+    static ProductionResults createConnectedToExistingNodesAndGetChanges(E nw, E sw, E se, E ne) {
+        return createConnectedToExistingNodesAndGetChanges(null, nw, sw, se, ne);
     }
 
     static ProductionResults createConnectedToNewNodesAndGetChanges(E above) {
@@ -203,7 +207,7 @@ public class I extends Node {
         ProductionResults pr2 = sw.bidirectionalConnectNorth(nw);
         ProductionResults pr3 = nw.bidirectionalConnectEast(ne);
         ProductionResults pr4 = sw.bidirectionalConnectEast(se);
-        ProductionResults pr5 = I.createAndGetChanges(above, nw, sw, se, ne);
+        ProductionResults pr5 = I.createConnectedToExistingNodesAndGetChanges(above, nw, sw, se, ne);
         ProductionResults pr6 = new ProductionResults(Lists.newArrayList(nw, sw, se, ne), Collections.emptyList());
 
         return ProductionResults.merge(pr1, pr2, pr3, pr4, pr5, pr6);
