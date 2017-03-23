@@ -17,8 +17,7 @@ public class E extends Node {
     private I se; // node on southeast
     private I ne; // node on northeast
 
-    //todo not public
-    public E(int offsetX, int offsetY, int level) {
+    E(int offsetX, int offsetY, int level) {
         super(offsetX, offsetY, level);
     }
 
@@ -42,19 +41,19 @@ public class E extends Node {
         return Optional.ofNullable(e);
     }
 
-    public Optional<I> getNw() {
+    public Optional<I> getNW() {
         return Optional.ofNullable(nw);
     }
 
-    public Optional<I> getSw() {
+    public Optional<I> getSW() {
         return Optional.ofNullable(sw);
     }
 
-    public Optional<I> getSe() {
+    public Optional<I> getSE() {
         return Optional.ofNullable(se);
     }
 
-    public Optional<I> getNe() {
+    public Optional<I> getNE() {
         return Optional.ofNullable(ne);
     }
 
@@ -62,19 +61,19 @@ public class E extends Node {
         this.below = below;
     }
 
-    void setNw(I nw) {
+    void setNW(I nw) {
         this.nw = nw;
     }
 
-    void setSw(I sw) {
+    void setSW(I sw) {
         this.sw = sw;
     }
 
-    void setSe(I se) {
+    void setSE(I se) {
         this.se = se;
     }
 
-    void setNe(I ne) {
+    void setNE(I ne) {
         this.ne = ne;
     }
 
@@ -82,19 +81,19 @@ public class E extends Node {
         return below != null;
     }
 
-    boolean isConnectedNorth() {
+    boolean isConnectedN() {
         return n != null;
     }
 
-    boolean isConnectedSouth() {
+    boolean isConnectedS() {
         return s != null;
     }
 
-    boolean isConnectedEast() {
+    boolean isConnectedE() {
         return e != null;
     }
 
-    boolean isConnectedWest() {
+    boolean isConnectedW() {
         return w != null;
     }
 
@@ -114,7 +113,7 @@ public class E extends Node {
         return ne != null;
     }
 
-    ProductionResults bidirectionalConnectNorth(E northern) {
+    ProductionResults bidirectionalConnectN(E northern) {
         checkState(n == null);
         checkState(northern.s == null);
         n = northern;
@@ -122,7 +121,7 @@ public class E extends Node {
         return new ProductionResults(Collections.singletonList(new Edge(this, northern)));
     }
 
-    ProductionResults bidirectionalConnectEast(E eastern) {
+    ProductionResults bidirectionalConnectE(E eastern) {
         checkState(e == null);
         checkState(eastern.w == null);
         e = eastern;
@@ -138,7 +137,7 @@ public class E extends Node {
         return I.createConnectedToNewNodesAndGetChanges(this);
     }
 
-    static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
+    public static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
         List<E> sorted = Arrays.asList(e1, e2, e3, e4);
         sorted.sort(Comparator.comparing(E::getOffsetX).thenComparing(E::getOffsetY));
         E sw = sorted.get(0);

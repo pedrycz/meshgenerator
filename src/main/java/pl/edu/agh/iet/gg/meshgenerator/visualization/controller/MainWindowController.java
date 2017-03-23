@@ -53,8 +53,8 @@ public class MainWindowController {
         };
 
         Consumer<I> onIClick = i -> {
-            if (i.canApplyP2a(i.getNw(), i.getNe())){
-                ProductionResults pr = i.applyP2a(i.getNw(), i.getNe());
+            if (i.canApplyP2a(i.getNW(), i.getNE())){
+                ProductionResults pr = i.applyP2a(i.getNW(), i.getNE());
                 dynamicGraphGroup.getChildren().addAll(pr.getAddedNodes().stream().map(nodeVertexFactory::getNodeVertex).collect(toList()));
                 dynamicGraphGroup.getChildren().addAll(pr.getAddedEdges().stream().map(edgeFactory::getEdge).collect(toList()));
             }
