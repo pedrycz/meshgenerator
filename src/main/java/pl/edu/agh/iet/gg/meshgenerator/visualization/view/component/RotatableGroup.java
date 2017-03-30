@@ -39,8 +39,8 @@ public class RotatableGroup extends Group {
         translation = new Translate();
         rotationStrategy = new AroundAxisRotationStrategy();
 
-        getTransforms().addAll(translation, scaling);
         getTransforms().addAll(rotationStrategy.getRotations());
+        getTransforms().addAll(translation, scaling);
     }
 
 
