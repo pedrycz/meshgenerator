@@ -7,8 +7,10 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.Edg
  * @author Wojciech Pachuta.
  */
 public class ConstantEdgeRadiusStrategy implements EdgeRadiusStrategy {
+
     @Override
     public double getEdgeRadius(Edge edge) {
         return 7;
     }
+
 }

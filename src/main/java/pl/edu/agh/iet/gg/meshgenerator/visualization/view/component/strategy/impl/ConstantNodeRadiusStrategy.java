@@ -7,8 +7,10 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.Nod
  * @author Wojciech Pachuta.
  */
 public class ConstantNodeRadiusStrategy implements NodeRadiusStrategy {
+
     @Override
     public double getNodeRadius(Node node) {
         return 15.0;
     }
+
 }

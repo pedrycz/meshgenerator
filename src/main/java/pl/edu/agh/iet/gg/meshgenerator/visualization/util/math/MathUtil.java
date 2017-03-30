@@ -4,6 +4,8 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
 
+import java.util.Arrays;
+
 /**
  * @author Bartłomiej Grochal
  */
@@ -30,6 +32,14 @@ public class MathUtil {
         return Math.sqrt(Math.pow(point.getX() - target.getTranslateX(), 2.0)
                 + Math.pow(point.getY() - target.getTranslateY(), 2.0)
                 + Math.pow(point.getZ() - target.getTranslateZ(), 2.0));
+    }
+
+    public static double length(double... vector) {
+        return Math.sqrt(Arrays.stream(vector).map(coordinate -> Math.pow(coordinate, 2.0)).sum());
+    }
+
+    public static double average(double... numbers) {
+        return Arrays.stream(numbers).sum() / numbers.length;
     }
 
 }
