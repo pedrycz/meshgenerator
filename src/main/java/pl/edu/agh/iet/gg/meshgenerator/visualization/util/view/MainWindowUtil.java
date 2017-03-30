@@ -34,10 +34,12 @@ public final class MainWindowUtil {
         stage.setScene(mainWindowScene);
         stage.show();
 
-        // We need to set event handlers outside the initialize() method of the controller, because some handlers are
-        // set on main scene, which value is null during initialization of the controller.
+        // We need to set event handlers outside the initialize() method of the controller, because:
+        // 1) some handlers are set on main scene, which value is null during initialization of the controller;
+        // 2) method for initializing graph calls the controller's methods.
         mainWindowController = mainLoader.getController();
-        mainWindowController.setEventHandlers();
+        mainWindowController.setEventManagers();
+        mainWindowController.initializeGraph();
     }
 
     /**

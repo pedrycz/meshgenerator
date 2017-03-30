@@ -17,7 +17,7 @@ public class CameraGroupMouseEventManager implements EventManager {
 
 
     @Override
-    public void setEvents(Node target) {
+    public void setHandlers(Node target) {
         target.getScene().setOnMousePressed(getMousePressedEventHandler(target));
         target.getScene().setOnMouseDragged(getMouseDraggedEventHandler(target));
         target.getScene().setOnScroll(getScrollEventHandler(target));

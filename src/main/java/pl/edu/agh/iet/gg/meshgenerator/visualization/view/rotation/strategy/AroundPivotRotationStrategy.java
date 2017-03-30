@@ -2,7 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy;
 
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.util.RotateDirection;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.RotateDirection;
 
 import java.util.Arrays;
 import java.util.List;

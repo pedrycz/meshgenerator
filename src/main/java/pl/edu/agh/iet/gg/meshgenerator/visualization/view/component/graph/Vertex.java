@@ -1,6 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph;
 
 import javafx.scene.shape.Sphere;
+import pl.edu.agh.iet.gg.meshgenerator.model.Node;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.VertexMouseEventManager;
 
@@ -9,26 +10,29 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.VertexMous
  */
 public class Vertex extends Sphere {
 
-    public Vertex() {
-        this(15.0, new double[]{0, 0, 0});
-    }
+    private final Node node;
 
-    public Vertex(double radius, double[] translations) {
+
+    public Vertex(double radius, double[] translations, Node node) {
         super(radius);
 
+        this.node = node;
         setTranslateX(translations[0]);
         setTranslateY(translations[1]);
         setTranslateZ(translations[2]);
 
-        // TODO: Uncomment when Vertices will be created dynamically (see: MainWindowController#setEventHandlers()).
-        // setEventHandlers();
+        setEventHandlers();
     }
 
 
-    public void setEventHandlers() {
+    private void setEventHandlers() {
         MainWindowUtil.getMainWindowController().getEventManagers()
                 .get(VertexMouseEventManager.class)
-                .setEvents(this);
+                .setHandlers(this);
+    }
+
+    public Node getNode() {
+        return node;
     }
 
 }

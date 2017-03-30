@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.gg.meshgenerator.visualization.view.util;
+package pl.edu.agh.iet.gg.meshgenerator.visualization.util.view;
 
 /**
  * @author Bartłomiej Grochal

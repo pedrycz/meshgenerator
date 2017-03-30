@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy;
+package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy;
 
 import pl.edu.agh.iet.gg.meshgenerator.model.Node;
 

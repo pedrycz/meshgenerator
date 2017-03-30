@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For clarity reasons the translateX="0" and translateY="0" (redundant) tags have been added. -->
+<!--suppress JavaFxRedundantPropertyValue -->
+
 <?import javafx.scene.Group?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.XAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.YAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.ZAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup?>
-
-<!-- For clarity reasons the translateX="0" and translateY="0" (redundant) tags have been added. -->
-<!--suppress JavaFxRedundantPropertyValue -->
-
 <RotatableGroup xmlns="http://javafx.com/javafx/8"
                 xmlns:fx="http://javafx.com/fxml/1"
                 fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController"
@@ -23,7 +23,7 @@
     </Group>
 
     <!-- TODO: Example of the dynamic graph structure, remove it one day -->
-    <Group fx:id="dynamicGraphGroup"/>
+    <Group fx:id="graphGroup"/>
 
     <!-- TODO: Example of the graph structure, remove it one day -->
     <Group>

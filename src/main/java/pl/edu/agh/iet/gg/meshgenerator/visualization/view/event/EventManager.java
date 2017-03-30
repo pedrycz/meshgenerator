@@ -15,6 +15,6 @@ public interface EventManager {
     double ZOOM_SCALE = 1.1;
 
 
-    void setEvents(Node target);
+    void setHandlers(Node target);
 
 }

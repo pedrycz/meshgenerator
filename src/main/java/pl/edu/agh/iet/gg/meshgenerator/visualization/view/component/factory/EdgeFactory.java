@@ -1,14 +1,14 @@
-package pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.factory;
+package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory;
 
 import javafx.geometry.Point3D;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.EdgeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.NodePositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.Edge;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodePositioningStrategy;
 
 /**
  * @author Wojciech Pachuta.
  */
-public class EdgeFactory {
+public class EdgeFactory implements ComponentFactory {
     private final EdgeRadiusStrategy edgeRadiusStrategy;
     private final NodePositioningStrategy nodePositioningStrategy;
 
@@ -29,7 +29,7 @@ public class EdgeFactory {
         Edge e = new Edge(edgeRadiusStrategy.getEdgeRadius(edge), length);
 
         //https://www.physicsforums.com/threads/calculating-axis-of-rotation.609724/
-        Point3D axis = new Point3D(- length * dz,0, length * dx);
+        Point3D axis = new Point3D(-length * dz, 0, length * dx);
         double angle = Math.acos(dy / Math.sqrt(dx * dx + dy * dy + dz * dz)) * 180 / Math.PI;
 
         e.rotationAxisProperty().setValue(axis);

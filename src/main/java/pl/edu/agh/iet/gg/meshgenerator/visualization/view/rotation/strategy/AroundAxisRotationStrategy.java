@@ -1,11 +1,11 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy;
 
 import javafx.scene.transform.Transform;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.RotateDirection;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.PlaneRotate;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.XYRotate;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.XZRotate;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.YZRotate;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.util.RotateDirection;
 
 import java.util.Arrays;
 import java.util.List;

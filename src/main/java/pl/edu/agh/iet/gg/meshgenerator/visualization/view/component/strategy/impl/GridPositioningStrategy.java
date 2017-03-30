@@ -1,7 +1,7 @@
-package pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.impl;
+package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl;
 
 import pl.edu.agh.iet.gg.meshgenerator.model.Node;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.figures.strategy.NodePositioningStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodePositioningStrategy;
 
 /**
  * @author Wojciech Pachuta.
