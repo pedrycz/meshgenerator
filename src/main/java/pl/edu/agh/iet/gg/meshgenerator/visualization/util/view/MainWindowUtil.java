@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.gg.meshgenerator.visualization.util;
+package pl.edu.agh.iet.gg.meshgenerator.visualization.util.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Camera;
@@ -7,6 +7,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
 
 import java.io.IOException;
 
@@ -15,6 +16,9 @@ import java.io.IOException;
  */
 public final class MainWindowUtil {
 
+    private static MainWindowController mainWindowController;
+
+
     private MainWindowUtil() {
     }
 
@@ -22,12 +26,26 @@ public final class MainWindowUtil {
     public static void setMainWindowAttributes(Stage stage, String mainWindowViewResourcePath) throws IOException {
         stage.setTitle("Graph Visualiser");
 
-        Parent root = FXMLLoader.load(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
+        FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
+        Parent root = mainLoader.load();
+
         Scene mainWindowScene = new Scene(root, 800, 600);
         mainWindowScene.setCamera(getMainWindowCamera());
-
         stage.setScene(mainWindowScene);
         stage.show();
+
+        // We need to set event handlers outside the initialize() method of the controller, because some handlers are
+        // set on main scene, which value is null during initialization of the controller.
+        mainWindowController = mainLoader.getController();
+        mainWindowController.setEventHandlers();
+    }
+
+    /**
+     * Note: this method should never be invoked before the {@link #setMainWindowAttributes(Stage, String)} method.
+     * Otherwise its result will be {@code null}, which may easily produce unexpected {@code NullPointerException}.
+     */
+    public static MainWindowController getMainWindowController() {
+        return mainWindowController;
     }
 
 
