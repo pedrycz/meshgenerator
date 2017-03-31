@@ -2,7 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.util.MainWindowUtil;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 
 /**
  * @author Bartłomiej Grochal

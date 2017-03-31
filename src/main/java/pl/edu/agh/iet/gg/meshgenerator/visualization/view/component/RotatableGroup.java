@@ -1,183 +1,135 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component;
 
 import javafx.scene.Group;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy.AroundAxisRotationStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy.RotationStrategy;
 
 /**
- * The source code of this class has been taken from:
- * https://docs.oracle.com/javase/8/javafx/graphics-tutorial/sampleapp3d-code.htm#CJAGGIFG
- *
- * TODO: Rewrite this code and use it properly.
+ * This class has been created on the basis of the code taken from the <a
+ * href="https://docs.oracle.com/javase/8/javafx/graphics-tutorial/sampleapp3d-code.htm#CJAGGIFG">Official JavaFX
+ * tutorial</a>.
  *
  * @author Bartłomiej Grochal
  */
+@SuppressWarnings("unused")
 public class RotatableGroup extends Group {
 
+    /**
+     * Defines scalingFactor of this group with a (floating-point) factor.
+     */
+    private final Scale scaling;
 
-    public enum RotateOrder {
-        XYZ, XZY, YXZ, YZX, ZXY, ZYX
-    }
+    /**
+     * Defines translation of this group with a 3D vector.
+     */
+    private final Translate translation;
 
-    public Translate t  = new Translate();
-    public Translate p  = new Translate();
-    public Translate ip = new Translate();
-    public Rotate rx = new Rotate();
-    { rx.setAxis(Rotate.X_AXIS); }
-    public Rotate ry = new Rotate();
-    { ry.setAxis(Rotate.Y_AXIS); }
-    public Rotate rz = new Rotate();
-    { rz.setAxis(Rotate.Z_AXIS); }
-    public Scale s = new Scale();
+    /**
+     * Defines rotation type applied to this group.
+     */
+    private final RotationStrategy rotationStrategy;
+
 
     public RotatableGroup() {
         super();
-        getTransforms().addAll(t, rz, ry, rx, s);
+
+        scaling = new Scale();
+        translation = new Translate();
+        rotationStrategy = new AroundAxisRotationStrategy();
+
+        getTransforms().addAll(rotationStrategy.getRotations());
+        getTransforms().addAll(translation, scaling);
     }
 
-    public RotatableGroup(RotatableGroup.RotateOrder rotateOrder) {
-        super();
-        // choose the order of rotations based on the rotateOrder
-        switch (rotateOrder) {
-            case XYZ:
-                getTransforms().addAll(t, p, rz, ry, rx, s, ip);
-                break;
-            case XZY:
-                getTransforms().addAll(t, p, ry, rz, rx, s, ip);
-                break;
-            case YXZ:
-                getTransforms().addAll(t, p, rz, rx, ry, s, ip);
-                break;
-            case YZX:
-                getTransforms().addAll(t, p, rx, rz, ry, s, ip);  // For Camera
-                break;
-            case ZXY:
-                getTransforms().addAll(t, p, ry, rx, rz, s, ip);
-                break;
-            case ZYX:
-                getTransforms().addAll(t, p, rx, ry, rz, s, ip);
-                break;
-        }
+
+    /*
+     * SCALING.
+     */
+    public double getScaling() {
+        return scaling.getX();
     }
 
-    public void setTranslate(double x, double y, double z) {
-        t.setX(x);
-        t.setY(y);
-        t.setZ(z);
+    public void setScaling(double scalingFactor) {
+        scaling.setX(scalingFactor);
+        scaling.setY(scalingFactor);
+        scaling.setZ(scalingFactor);
     }
 
-    public void setTranslate(double x, double y) {
-        t.setX(x);
-        t.setY(y);
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setScaleX(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setScalingX(double scalingX) {
+        scaling.setX(scalingX);
     }
 
-    // Cannot override these methods as they are final:
-    // public void setTranslateX(double x) { t.setX(x); }
-    // public void setTranslateY(double y) { t.setY(y); }
-    // public void setTranslateZ(double z) { t.setZ(z); }
-    // Use these methods instead:
-    public void setTx(double x) { t.setX(x); }
-    public void setTy(double y) { t.setY(y); }
-    public void setTz(double z) { t.setZ(z); }
-
-    public void setRotate(double x, double y, double z) {
-        rx.setAngle(x);
-        ry.setAngle(y);
-        rz.setAngle(z);
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setScaleY(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setScalingY(double scalingY) {
+        scaling.setY(scalingY);
     }
 
-    public void setRotateX(double x) { rx.setAngle(x); }
-    public void setRotateY(double y) { ry.setAngle(y); }
-    public void setRotateZ(double z) { rz.setAngle(z); }
-    public void setRx(double x) { rx.setAngle(x); }
-    public void setRy(double y) { ry.setAngle(y); }
-    public void setRz(double z) { rz.setAngle(z); }
-
-    public void setScale(double scaleFactor) {
-        s.setX(scaleFactor);
-        s.setY(scaleFactor);
-        s.setZ(scaleFactor);
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setScaleZ(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setScalingZ(double scalingZ) {
+        scaling.setZ(scalingZ);
     }
 
-    public void setScale(double x, double y, double z) {
-        s.setX(x);
-        s.setY(y);
-        s.setZ(z);
+    /**
+     * Sets coordinates of a point, which is a center of scalingFactor transformation.
+     */
+    public void setScalingPivot(double pivotX, double pivotY, double pivotZ) {
+        scaling.setPivotX(pivotX);
+        scaling.setPivotY(pivotY);
+        scaling.setPivotZ(pivotZ);
     }
 
-    // Cannot override these methods as they are final:
-    // public void setScaleX(double x) { s.setX(x); }
-    // public void setScaleY(double y) { s.setY(y); }
-    // public void setScaleZ(double z) { s.setZ(z); }
-    // Use these methods instead:
-    public void setSx(double x) { s.setX(x); }
-    public void setSy(double y) { s.setY(y); }
-    public void setSz(double z) { s.setZ(z); }
 
-    public void setPivot(double x, double y, double z) {
-        p.setX(x);
-        p.setY(y);
-        p.setZ(z);
-        ip.setX(-x);
-        ip.setY(-y);
-        ip.setZ(-z);
+    /*
+     * TRANSLATION.
+     */
+    public void setTranslation(double translationX, double translationY, double translationZ) {
+        translation.setX(translationX);
+        translation.setY(translationY);
+        translation.setZ(translationZ);
     }
 
-    public void reset() {
-        t.setX(0.0);
-        t.setY(0.0);
-        t.setZ(0.0);
-        rx.setAngle(0.0);
-        ry.setAngle(0.0);
-        rz.setAngle(0.0);
-        s.setX(1.0);
-        s.setY(1.0);
-        s.setZ(1.0);
-        p.setX(0.0);
-        p.setY(0.0);
-        p.setZ(0.0);
-        ip.setX(0.0);
-        ip.setY(0.0);
-        ip.setZ(0.0);
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setTranslateX(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setTranslationX(double translationX) {
+        translation.setX(translationX);
     }
 
-    public void resetTSP() {
-        t.setX(0.0);
-        t.setY(0.0);
-        t.setZ(0.0);
-        s.setX(1.0);
-        s.setY(1.0);
-        s.setZ(1.0);
-        p.setX(0.0);
-        p.setY(0.0);
-        p.setZ(0.0);
-        ip.setX(0.0);
-        ip.setY(0.0);
-        ip.setZ(0.0);
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setTranslateY(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setTranslationY(double translationY) {
+        translation.setY(translationY);
     }
 
-    @Override public String toString() {
-        return "Xform[t = (" +
-                t.getX() + ", " +
-                t.getY() + ", " +
-                t.getZ() + ")  " +
-                "r = (" +
-                rx.getAngle() + ", " +
-                ry.getAngle() + ", " +
-                rz.getAngle() + ")  " +
-                "s = (" +
-                s.getX() + ", " +
-                s.getY() + ", " +
-                s.getZ() + ")  " +
-                "p = (" +
-                p.getX() + ", " +
-                p.getY() + ", " +
-                p.getZ() + ")  " +
-                "ip = (" +
-                ip.getX() + ", " +
-                ip.getY() + ", " +
-                ip.getZ() + ")]";
+    /**
+     * Use this method instead of {@link javafx.scene.Node#setTranslateZ(double)} - it cannot be overridden, because it
+     * has final modifier.
+     */
+    public void setTranslationZ(double translationZ) {
+        translation.setZ(translationZ);
+    }
+
+
+    /*
+     * ROTATION.
+     */
+    public RotationStrategy getRotationStrategy() {
+        return rotationStrategy;
     }
 
 }
