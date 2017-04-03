@@ -29,7 +29,7 @@ public final class MainWindowUtil {
         FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
         Parent root = mainLoader.load();
 
-        Scene mainWindowScene = new Scene(root, 800, 600);
+        Scene mainWindowScene = new Scene(root, 800, 600, true);
         mainWindowScene.setCamera(getMainWindowCamera());
         stage.setScene(mainWindowScene);
         stage.show();
