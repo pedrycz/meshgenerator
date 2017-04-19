@@ -11,8 +11,8 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.Vert
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodePositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.ConstantEdgeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.ConstantNodeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.DecreasingEdgeRadiusStrategy;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.DecreasingNodeRadiusStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.GridPositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.keyboard.CameraGroupKeyboardEventManager;
@@ -85,8 +85,8 @@ public class MainWindowController {
         componentFactories = new HashMap<>();
 
         NodePositioningStrategy nodePositioningStrategy = new GridPositioningStrategy();
-        NodeRadiusStrategy nodeRadiusStrategy = new ConstantNodeRadiusStrategy();
-        EdgeRadiusStrategy edgeRadiusStrategy = new ConstantEdgeRadiusStrategy();
+        NodeRadiusStrategy nodeRadiusStrategy = new DecreasingNodeRadiusStrategy();
+        EdgeRadiusStrategy edgeRadiusStrategy = new DecreasingEdgeRadiusStrategy();
 
         componentFactories.put(VertexFactory.class, new VertexFactory(nodePositioningStrategy, nodeRadiusStrategy));
         componentFactories.put(EdgeFactory.class, new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy));

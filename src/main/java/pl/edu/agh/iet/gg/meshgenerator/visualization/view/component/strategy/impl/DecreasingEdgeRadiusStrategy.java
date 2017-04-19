@@ -4,13 +4,13 @@ import pl.edu.agh.iet.gg.meshgenerator.model.Edge;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
 
 /**
- * @author Wojciech Pachuta.
+ * @author Bartłomiej Grochal
  */
-public class ConstantEdgeRadiusStrategy implements EdgeRadiusStrategy {
+public class DecreasingEdgeRadiusStrategy implements EdgeRadiusStrategy {
 
     @Override
     public double getEdgeRadius(Edge edge) {
-        return 5;
+        return Math.pow(0.8, edge.getA().getLevel()) * 5;
     }
 
 }

@@ -17,7 +17,7 @@ public class E extends Node {
     private I se; // node on southeast
     private I ne; // node on northeast
 
-    E(int offsetX, int offsetY, int level) {
+    E(double offsetX, double offsetY, int level) {
         super(offsetX, offsetY, level);
     }
 

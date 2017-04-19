@@ -17,19 +17,19 @@ public class I extends Node {
     private final E se; // node on southeast
     private final E ne; // node on northeast
 
-    private static int getOffsetX(E above, E sw) {
+    private static double getOffsetX(E above, E sw) {
         if (above != null) {
-            return above.getOffsetX() * 2;
+            return above.getOffsetX();
         } else {
-            return sw.getOffsetX() + 1;
+            return sw.getOffsetX() + Math.pow(2.0, -(sw.getLevel() - 1));
         }
     }
 
-    private static int getOffsetY(E above, E sw) {
+    private static double getOffsetY(E above, E sw) {
         if (above != null) {
-            return above.getOffsetY() * 2;
+            return above.getOffsetY();
         } else {
-            return sw.getOffsetY() + 1;
+            return sw.getOffsetY() + Math.pow(2.0, -(sw.getLevel() - 1));
         }
     }
 
@@ -61,9 +61,6 @@ public class I extends Node {
         ne.setSW(this);
     }
 
-    private I(E nw, E sw, E se, E ne) {
-        this(null, nw, sw, se, ne);
-    }
 
     public Optional<E> getAbove() {
         return Optional.ofNullable(above);
@@ -195,13 +192,15 @@ public class I extends Node {
     }
 
     static ProductionResults createConnectedToNewNodesAndGetChanges(E above) {
-        int iOffxetX = above.getOffsetX() * 2;
-        int iOffxetY = above.getOffsetY() * 2;
+        int level = above.getLevel() + 1;
+        double aboveOffsetX = above.getOffsetX();
+        double aboveOffsetY = above.getOffsetY();
+        double offsetDelta = Math.pow(2.0, -above.getLevel());
 
-        E nw = new E(iOffxetX + 1, iOffxetY - 1, above.getLevel() + 1);
-        E sw = new E(iOffxetX - 1, iOffxetY - 1, above.getLevel() + 1);
-        E se = new E(iOffxetX - 1, iOffxetY + 1, above.getLevel() + 1);
-        E ne = new E(iOffxetX + 1, iOffxetY + 1, above.getLevel() + 1);
+        E nw = new E(aboveOffsetX + offsetDelta, aboveOffsetY - offsetDelta, level);
+        E sw = new E(aboveOffsetX - offsetDelta, aboveOffsetY - offsetDelta, level);
+        E se = new E(aboveOffsetX - offsetDelta, aboveOffsetY + offsetDelta, level);
+        E ne = new E(aboveOffsetX + offsetDelta, aboveOffsetY + offsetDelta, level);
 
         ProductionResults pr1 = se.bidirectionalConnectN(ne);
         ProductionResults pr2 = sw.bidirectionalConnectN(nw);
