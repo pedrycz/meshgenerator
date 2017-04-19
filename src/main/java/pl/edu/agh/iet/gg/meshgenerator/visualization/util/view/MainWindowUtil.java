@@ -29,8 +29,7 @@ public final class MainWindowUtil {
         FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
         Parent root = mainLoader.load();
 
-        Scene mainWindowScene = new Scene(root, 800, 600, true);
-        mainWindowScene.setCamera(getMainWindowCamera());
+        Scene mainWindowScene = new Scene(root, 800, 600);
         stage.setScene(mainWindowScene);
         stage.show();
 
@@ -50,16 +49,15 @@ public final class MainWindowUtil {
         return mainWindowController;
     }
 
+    public static Camera getGraphSceneCamera() {
+        Camera graphSceneCamera = new PerspectiveCamera(true);
+        graphSceneCamera.setNearClip(0.1);
+        graphSceneCamera.setFarClip(10000.0);
+        graphSceneCamera.setTranslateX(0.0);
+        graphSceneCamera.setTranslateY(0.0);
+        graphSceneCamera.setTranslateZ(-1500.0);
 
-    private static Camera getMainWindowCamera() {
-        Camera mainWindowCamera = new PerspectiveCamera(true);
-        mainWindowCamera.setNearClip(0.1);
-        mainWindowCamera.setFarClip(10000.0);
-        mainWindowCamera.setTranslateX(0.0);
-        mainWindowCamera.setTranslateY(0.0);
-        mainWindowCamera.setTranslateZ(-1500.0);
-
-        return mainWindowCamera;
+        return graphSceneCamera;
     }
 
 }

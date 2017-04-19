@@ -3,7 +3,9 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.SubScene;
 import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.EdgeFactory;
@@ -27,6 +29,7 @@ import java.util.Map;
  */
 public class MainWindowController {
 
+    @FXML private SubScene graphScene;
     @FXML private RotatableGroup environmentGroup;
     @FXML private Group graphGroup;
 
@@ -38,6 +41,7 @@ public class MainWindowController {
     @FXML
     @SuppressWarnings("unused")
     private void initialize() {
+        graphScene.setCamera(MainWindowUtil.getGraphSceneCamera());
         environmentGroup.getRotationStrategy().setInitialValues();
         setComponentFactories();
     }
