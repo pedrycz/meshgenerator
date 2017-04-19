@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis;
 
+import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
 /**
@@ -8,7 +9,7 @@ import javafx.scene.paint.Color;
 public class YAxis extends Axis {
 
     public YAxis() {
-        super(AXIS_SIZE, AXIS_LENGTH, AXIS_SIZE, Color.GREEN);
+        super(new Point3D(0.0, 1.0, 0.0), Color.GREEN, "OY");
     }
 
 }

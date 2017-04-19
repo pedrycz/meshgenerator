@@ -6,7 +6,6 @@
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.ZAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup?>
 
-
 <RotatableGroup xmlns="http://javafx.com/javafx/8"
                 xmlns:fx="http://javafx.com/fxml/1"
                 fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController"

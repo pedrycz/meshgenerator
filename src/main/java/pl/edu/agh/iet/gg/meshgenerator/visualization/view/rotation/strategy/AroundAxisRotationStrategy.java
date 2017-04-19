@@ -48,7 +48,7 @@ public class AroundAxisRotationStrategy implements RotationStrategy {
     @Override
     public void setInitialValues() {
         setRotationYZ(-45.0);
-        setRotationXY(45.0);
+        setRotationXY(-44.6);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis;
 
+import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
 /**
@@ -8,7 +9,7 @@ import javafx.scene.paint.Color;
 public class ZAxis extends Axis {
 
     public ZAxis() {
-        super(AXIS_SIZE, AXIS_SIZE, AXIS_LENGTH, Color.BLUE);
+        super(new Point3D(1.0, 0.0, 0.0), Color.BLUE, "OZ");
     }
 
 }
