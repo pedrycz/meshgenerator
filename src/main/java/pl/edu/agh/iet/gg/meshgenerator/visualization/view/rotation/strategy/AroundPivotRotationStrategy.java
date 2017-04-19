@@ -15,10 +15,6 @@ import static pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventMana
 @SuppressWarnings("unused")
 public class AroundPivotRotationStrategy implements RotationStrategy {
 
-    // TODO: Move to properties. Unify with the same constant in the AroundPivotRotationStrategy class.
-    private static final double KEYBOARD_DELTA = 1.0;
-
-
     /**
      * Defines rotation of this group around specified {@code pivot} point, along X axis.
      */
@@ -123,7 +119,7 @@ public class AroundPivotRotationStrategy implements RotationStrategy {
 
 
     private void setKeyboardRotation(Rotate rotation, RotateDirection direction) {
-        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * KEYBOARD_DELTA * ROTATION_SPEED);
+        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * ROTATION_SPEED);
     }
 
 }

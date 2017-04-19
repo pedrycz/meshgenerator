@@ -8,7 +8,7 @@ import javafx.scene.Node;
 public interface EventManager {
 
     // TODO: Move all to properties.
-    double ROTATION_SPEED = 1.0;
+    double ROTATION_SPEED = 2.0;    // Single event caught rotates group by ROTATION_SPEED degrees.
 
     double MAX_ZOOM_SCALE = 5.0;
     double MIN_ZOOM_SCALE = 0.5;

@@ -18,10 +18,6 @@ import static pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventMana
 @SuppressWarnings("unused")
 public class AroundAxisRotationStrategy implements RotationStrategy {
 
-    // TODO: Move to properties. Unify with the same constant in the AroundPivotRotationStrategy class.
-    private static final double KEYBOARD_DELTA = 0.05;
-
-
     /**
      * Defines rotation of this group around X axis in YZ plane.
      */
@@ -47,15 +43,14 @@ public class AroundAxisRotationStrategy implements RotationStrategy {
 
     @Override
     public void setInitialValues() {
-        setRotationYZ(-45.0);
-        setRotationXY(-44.6);
+        setRotationYZ(-55.0);
+        setRotationXY(-35.0);
     }
 
     @Override
     public void handleMouseRotation(double mousePositionDeltaX, double mousePositionDeltaY) {
-        // TODO: For some reason we need to scale values below by 0.05. Try to unify this with AroundPivotRotationStrategy#handleMouseRotation(double, double).
-        setRotationYZ(getRotationYZ() - mousePositionDeltaY * 0.05 * ROTATION_SPEED);
-        setRotationXY(getRotationXY() + mousePositionDeltaX * 0.05 * ROTATION_SPEED);
+        setRotationYZ(getRotationYZ() - mousePositionDeltaY * ROTATION_SPEED);
+        setRotationXY(getRotationXY() + mousePositionDeltaX * ROTATION_SPEED);
     }
 
     @Override
@@ -119,7 +114,7 @@ public class AroundAxisRotationStrategy implements RotationStrategy {
 
 
     private void setKeyboardRotation(PlaneRotate rotation, RotateDirection direction) {
-        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * KEYBOARD_DELTA * ROTATION_SPEED);
+        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * ROTATION_SPEED);
     }
 
 }
