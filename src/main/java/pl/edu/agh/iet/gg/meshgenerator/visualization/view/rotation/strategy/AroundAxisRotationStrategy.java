@@ -55,7 +55,7 @@ public class AroundAxisRotationStrategy implements RotationStrategy {
     public void handleMouseRotation(double mousePositionDeltaX, double mousePositionDeltaY) {
         // TODO: For some reason we need to scale values below by 0.05. Try to unify this with AroundPivotRotationStrategy#handleMouseRotation(double, double).
         setRotationYZ(getRotationYZ() - mousePositionDeltaY * 0.05 * ROTATION_SPEED);
-        setRotationXY(getRotationXY() - mousePositionDeltaX * 0.05 * ROTATION_SPEED);
+        setRotationXY(getRotationXY() + mousePositionDeltaX * 0.05 * ROTATION_SPEED);
     }
 
     @Override
