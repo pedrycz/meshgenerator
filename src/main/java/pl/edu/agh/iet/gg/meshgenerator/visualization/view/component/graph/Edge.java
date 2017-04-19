@@ -10,12 +10,18 @@ public class Edge extends Cylinder {
 
     public Edge(double radius, double length, Point3D rotationAxis, double rotationAngle, double[] translations) {
         super(radius, length);
+        initialize(rotationAxis, rotationAngle, translations);
+    }
 
+
+    private void initialize(Point3D rotationAxis, double rotationAngle, double[] translations) {
         setRotationAxis(rotationAxis);
         setRotate(rotationAngle);
         setTranslateX(translations[0]);
         setTranslateY(translations[1]);
         setTranslateZ(translations[2]);
+
+        setMaterial(Constants.EDGE_MATERIAL);
     }
 
 }

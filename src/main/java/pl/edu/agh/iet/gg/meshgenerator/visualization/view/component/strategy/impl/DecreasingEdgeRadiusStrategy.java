@@ -10,7 +10,7 @@ public class DecreasingEdgeRadiusStrategy implements EdgeRadiusStrategy {
 
     @Override
     public double getEdgeRadius(Edge edge) {
-        return Math.pow(0.8, edge.getA().getLevel()) * 5;
+        return Math.pow(0.8, edge.getA().getLevel()) * 4;
     }
 
 }
