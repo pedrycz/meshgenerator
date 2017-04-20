@@ -1,10 +1,8 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.util.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Camera;
-import javafx.scene.Parent;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.stage.Stage;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
@@ -58,6 +56,14 @@ public final class MainWindowUtil {
         graphSceneCamera.setTranslateZ(-1500.0);
 
         return graphSceneCamera;
+    }
+
+    public static void gainFocus(Node node) {
+        Platform.runLater(() -> {
+            if (!node.isFocused()) {
+                node.requestFocus();
+            }
+        });
     }
 
 }

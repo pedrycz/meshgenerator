@@ -44,6 +44,7 @@ public class MainWindowController {
         graphScene.setCamera(MainWindowUtil.getGraphSceneCamera());
         environmentGroup.getRotationStrategy().setInitialValues();
         setComponentFactories();
+        MainWindowUtil.gainFocus(environmentGroup);
     }
 
 
