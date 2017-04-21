@@ -32,11 +32,11 @@ public class NodeUtil {
     public static void visualizeProductionResults(ProductionResults results) {
         Map<Class, ComponentFactory> componentFactories = getMainWindowController().getComponentFactories();
 
-        getMainWindowController().getGraphGroup().getChildren().addAll(
+        getMainWindowController().getGraphController().getGraphGroup().getChildren().addAll(
                 results.getAddedNodes().stream()
                         .map(((VertexFactory) componentFactories.get(VertexFactory.class))::getVertex)
                         .collect(toList()));
-        getMainWindowController().getGraphGroup().getChildren().addAll(
+        getMainWindowController().getGraphController().getGraphGroup().getChildren().addAll(
                 results.getAddedEdges().stream()
                         .map(((EdgeFactory) componentFactories.get(EdgeFactory.class))::getEdge)
                         .collect(toList()));

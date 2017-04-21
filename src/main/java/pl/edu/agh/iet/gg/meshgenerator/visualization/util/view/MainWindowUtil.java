@@ -6,6 +6,7 @@ import javafx.scene.*;
 import javafx.stage.Stage;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.VertexFactory;
 
 import java.io.IOException;
 
@@ -27,16 +28,20 @@ public final class MainWindowUtil {
         FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
         Parent root = mainLoader.load();
 
+        mainWindowController = mainLoader.getController();
         Scene mainWindowScene = new Scene(root, 800, 600);
         stage.setScene(mainWindowScene);
         stage.show();
+    }
 
-        // We need to set event handlers outside the initialize() method of the controller, because:
+    public static void initializeMainWindow() {
+        // We need to call these methods outside the initialize() method of the controller, because:
         // 1) some handlers are set on main scene, which value is null during initialization of the controller;
         // 2) method for initializing graph calls the controller's methods.
-        mainWindowController = mainLoader.getController();
         mainWindowController.setEventManagers();
-        mainWindowController.initializeGraph();
+        mainWindowController.getGraphController()
+                .initializeGraph((VertexFactory) mainWindowController.getComponentFactories().get(VertexFactory.class));
+        mainWindowController.getGraphController().setCameraHandlers(mainWindowController.getEventManagers());
     }
 
     /**

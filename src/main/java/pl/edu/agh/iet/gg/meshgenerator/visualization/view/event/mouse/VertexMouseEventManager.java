@@ -29,7 +29,7 @@ public class VertexMouseEventManager implements EventManager {
                 /* Zooming. */
 
                 // TODO: Should we mark selected scaling pivot in some way?
-                getMainWindowController().getEnvironmentGroup()
+                getMainWindowController().getGraphController().getEnvironmentGroup()
                         .setScalingPivot(target.getTranslateX(), target.getTranslateY(), target.getTranslateZ());
                 return;
             }

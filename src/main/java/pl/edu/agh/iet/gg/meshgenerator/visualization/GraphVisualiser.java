@@ -16,6 +16,7 @@ public class GraphVisualiser extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainWindowUtil.setMainWindowAttributes(primaryStage, "view/layout/MainWindowView.fxml");
+        MainWindowUtil.initializeMainWindow();
     }
 
 }

@@ -1,12 +1,8 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.SubScene;
-import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.EdgeFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.VertexFactory;
@@ -30,41 +26,26 @@ import java.util.Map;
 public class MainWindowController {
 
     @FXML private SubScene graphScene;
-    @FXML private RotatableGroup environmentGroup;
-    @FXML private Group graphGroup;
+    @FXML private GraphController graphSceneController;
 
     private Map<Class, ComponentFactory> componentFactories;
     private Map<Class, EventManager> eventManagers;
-    private Graph graph;
 
 
     @FXML
     @SuppressWarnings("unused")
     private void initialize() {
         graphScene.setCamera(MainWindowUtil.getGraphSceneCamera());
-        environmentGroup.getRotationStrategy().setInitialValues();
         setComponentFactories();
-        MainWindowUtil.gainFocus(environmentGroup);
     }
 
 
-    public void initializeGraph() {
-        this.graph = new Graph();
-
-        Node root = ((VertexFactory) componentFactories.get(VertexFactory.class)).getVertex(graph.getRoot());
-        graphGroup.getChildren().add(root);
+    public GraphController getGraphController() {
+        return graphSceneController;
     }
 
-    public RotatableGroup getEnvironmentGroup() {
-        return environmentGroup;
-    }
-
-    public Group getGraphGroup() {
-        return graphGroup;
-    }
-
-    public Graph getGraph() {
-        return graph;
+    public Map<Class, ComponentFactory> getComponentFactories() {
+        return componentFactories;
     }
 
     public Map<Class, EventManager> getEventManagers() {
@@ -76,13 +57,7 @@ public class MainWindowController {
 
         eventManagers.put(CameraGroupMouseEventManager.class, new CameraGroupMouseEventManager());
         eventManagers.put(CameraGroupKeyboardEventManager.class, new CameraGroupKeyboardEventManager());
-        eventManagers.values().forEach(eventManager -> eventManager.setHandlers(environmentGroup));
-
         eventManagers.put(VertexMouseEventManager.class, new VertexMouseEventManager());
-    }
-
-    public Map<Class, ComponentFactory> getComponentFactories() {
-        return componentFactories;
     }
 
 
