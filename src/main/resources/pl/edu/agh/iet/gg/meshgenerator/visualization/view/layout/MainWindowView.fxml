@@ -7,60 +7,35 @@
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.XAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.YAxis?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.ZAxis?>
-<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.menu.*?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.112-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController"
+          hgap="5">
 
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
 
+    <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <fx:include source="MenuView.fxml"/>
+    </Pane>
 
-    <GridPane prefHeight="600" prefWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <!-- Configuring graph levels to show. -->
-        <MenuGroup GridPane.rowIndex="0">
-            <GroupLabel text="Graph levels to show:"/>
+    <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <SubScene fx:id="graphScene" depthBuffer="true" height="600" width="640">
+            <root>
+                <RotatableGroup fx:id="environmentGroup">
+                    <Group>
+                        <XAxis/>
+                        <YAxis/>
+                        <ZAxis/>
+                    </Group>
 
-            <MenuItemLabel GridPane.rowIndex="2" text="First level:"/>
-            <CenteredTextField GridPane.rowIndex="2"/>
-
-            <MenuItemLabel GridPane.rowIndex="3" text="Last level:"/>
-            <CenteredTextField GridPane.rowIndex="3"/>
-
-            <!-- TODO: Implement this behaviour. -->
-            <FullWidthButton GridPane.rowIndex="4" text="Repaint"/>
-        </MenuGroup>
-
-        <MenuGroup GridPane.rowIndex="1">
-            <GroupLabel text="Serialization:"/>
-
-            <MenuItemLabel GridPane.rowIndex="2" text="Serialize:"/>
-            <FullWidthButton GridPane.rowIndex="2" text="Save"/>
-
-            <MenuItemLabel GridPane.rowIndex="3" text="Deserialize:"/>
-            <FullWidthButton GridPane.rowIndex="3" text="Open"/>
-        </MenuGroup>
-
-        <!-- Closing separator -->
-        <MenuSeparator GridPane.rowIndex="2"/>
-
-    </GridPane>
-
-    <SubScene fx:id="graphScene" depthBuffer="true" height="600" width="650" GridPane.columnIndex="1"
-              GridPane.rowIndex="0">
-        <root>
-            <RotatableGroup fx:id="environmentGroup">
-                <Group>
-                    <XAxis/>
-                    <YAxis/>
-                    <ZAxis/>
-                </Group>
-
-                <Group fx:id="graphGroup"/>
-            </RotatableGroup>
-        </root>
-    </SubScene>
+                    <Group fx:id="graphGroup"/>
+                </RotatableGroup>
+            </root>
+        </SubScene>
+    </Pane>
 
 </GridPane>
