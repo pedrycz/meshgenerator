@@ -13,13 +13,13 @@
         <GroupLabel text="Graph levels to show:"/>
 
         <MenuItemLabel GridPane.rowIndex="2" text="First level:"/>
-        <CenteredTextField GridPane.rowIndex="2"/>
+        <CenteredTextField fx:id="graphFirstLevel" GridPane.rowIndex="2" onFocusedChange="#validateGraphLevel"/>
 
         <MenuItemLabel GridPane.rowIndex="3" text="Last level:"/>
-        <CenteredTextField GridPane.rowIndex="3"/>
+        <CenteredTextField fx:id="graphLastLevel" GridPane.rowIndex="3" onFocusedChange="#validateGraphLevel"/>
 
         <!-- TODO: Implement this behaviour. -->
-        <FullWidthButton GridPane.rowIndex="4" text="Repaint"/>
+        <FullWidthButton fx:id="repaintButton" GridPane.rowIndex="4" text="Repaint"/>
     </MenuGroup>
 
     <MenuGroup GridPane.rowIndex="1">

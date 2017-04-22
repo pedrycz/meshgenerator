@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
+import javafx.scene.layout.GridPane;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
@@ -24,7 +25,9 @@ import java.util.Map;
 public class MainWindowController {
 
     @FXML private SubScene graphScene;
+    @FXML private GridPane menuPane;
     @FXML private GraphController graphSceneController;
+    @FXML private MenuController menuPaneController;
 
     private Map<Class, ComponentFactory> componentFactories;
     private Map<Class, EventManager> eventManagers;
@@ -40,6 +43,10 @@ public class MainWindowController {
 
     public GraphController getGraphController() {
         return graphSceneController;
+    }
+
+    public MenuController getMenuController() {
+        return menuPaneController;
     }
 
     public Map<Class, ComponentFactory> getComponentFactories() {

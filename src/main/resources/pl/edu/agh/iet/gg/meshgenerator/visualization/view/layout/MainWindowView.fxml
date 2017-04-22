@@ -13,7 +13,7 @@
     </padding>
 
     <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <fx:include source="MenuView.fxml"/>
+        <fx:include fx:id="menuPane" source="MenuView.fxml"/>
     </Pane>
 
     <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
