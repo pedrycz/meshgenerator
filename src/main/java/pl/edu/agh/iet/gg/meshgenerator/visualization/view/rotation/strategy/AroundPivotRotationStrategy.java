@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy;
 
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.RotateDirection;
 
 import java.util.Arrays;
@@ -40,9 +41,9 @@ public class AroundPivotRotationStrategy implements RotationStrategy {
 
     @Override
     public void setInitialValues() {
-        setRotationX(-45.0);
-        setRotationY(-45.0);
-        setRotationZ(-35.0);
+        setRotationX(Config.getDouble("rotation.pivot.XInitialValue"));
+        setRotationY(Config.getDouble("rotation.pivot.YInitialValue"));
+        setRotationZ(Config.getDouble("rotation.pivot.ZInitialValue"));
     }
 
     @Override

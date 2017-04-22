@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.EdgeFactory;
@@ -9,9 +10,6 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.Vert
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodePositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.DecreasingEdgeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.DecreasingNodeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.GridPositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.keyboard.CameraGroupKeyboardEventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.CameraGroupMouseEventManager;
@@ -64,12 +62,19 @@ public class MainWindowController {
     private void setComponentFactories() {
         componentFactories = new HashMap<>();
 
-        NodePositioningStrategy nodePositioningStrategy = new GridPositioningStrategy();
-        NodeRadiusStrategy nodeRadiusStrategy = new DecreasingNodeRadiusStrategy();
-        EdgeRadiusStrategy edgeRadiusStrategy = new DecreasingEdgeRadiusStrategy();
+        try {
+            NodePositioningStrategy nodePositioningStrategy =
+                    (NodePositioningStrategy) Class.forName(Config.getString("strategy.NodePositioning")).newInstance();
+            NodeRadiusStrategy nodeRadiusStrategy =
+                    (NodeRadiusStrategy) Class.forName(Config.getString("strategy.NodeRadius")).newInstance();
+            EdgeRadiusStrategy edgeRadiusStrategy =
+                    (EdgeRadiusStrategy) Class.forName(Config.getString("strategy.EdgeRadius")).newInstance();
 
-        componentFactories.put(VertexFactory.class, new VertexFactory(nodePositioningStrategy, nodeRadiusStrategy));
-        componentFactories.put(EdgeFactory.class, new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy));
+            componentFactories.put(VertexFactory.class, new VertexFactory(nodePositioningStrategy, nodeRadiusStrategy));
+            componentFactories.put(EdgeFactory.class, new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exc) {
+            exc.printStackTrace();
+        }
     }
 
 }

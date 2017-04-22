@@ -6,7 +6,6 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.util.view;
 public enum RotateDirection {
     RIGHT(1), LEFT(-1), UP(1), DOWN(-1);
 
-
     private int directionSign;
 
 

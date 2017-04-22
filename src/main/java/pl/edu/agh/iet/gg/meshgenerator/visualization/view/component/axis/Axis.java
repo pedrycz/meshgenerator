@@ -4,17 +4,18 @@ import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 
 /**
  * @author Bartłomiej Grochal
  */
 public abstract class Axis extends Group {
 
-    static final double AXIS_LINE_LENGTH = 1000.0;
-    static final double AXIS_LINE_SIZE = 1.0;
+    static final double AXIS_LINE_LENGTH = Config.getDouble("component.axis.LineLength");
+    static final double AXIS_LINE_SIZE = Config.getDouble("component.axis.LineThickness");
 
-    static final float AXIS_HEAD_HEIGHT = 30.0f;
-    static final float AXIS_HEAD_SIDE = 20.0f;
+    static final float AXIS_HEAD_HEIGHT = Config.getFloat("component.axis.HeadHeight");
+    static final float AXIS_HEAD_SIDE = Config.getFloat("component.axis.HeadSide");
 
 
     private final AxisLine axisLine;

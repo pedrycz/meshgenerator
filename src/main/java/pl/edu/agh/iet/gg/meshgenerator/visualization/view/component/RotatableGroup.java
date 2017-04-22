@@ -3,6 +3,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component;
 import javafx.scene.Group;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy.AroundAxisRotationStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy.RotationStrategy;
 
@@ -29,7 +30,7 @@ public class RotatableGroup extends Group {
     /**
      * Defines rotation type applied to this group.
      */
-    private final RotationStrategy rotationStrategy;
+    private RotationStrategy rotationStrategy;
 
 
     public RotatableGroup() {
@@ -37,7 +38,12 @@ public class RotatableGroup extends Group {
 
         scaling = new Scale();
         translation = new Translate();
-        rotationStrategy = new AroundAxisRotationStrategy();
+        try {
+            rotationStrategy = (RotationStrategy) Class.forName(Config.getString("strategy.Rotation")).newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exc) {
+            exc.printStackTrace();
+            rotationStrategy = new AroundAxisRotationStrategy();    // default rotation strategy
+        }
 
         getTransforms().addAll(rotationStrategy.getRotations());
         getTransforms().addAll(translation, scaling);

@@ -56,5 +56,4 @@ public class GraphController {
         return graph;
     }
 
-
 }

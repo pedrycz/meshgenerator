@@ -10,7 +10,7 @@ public class ConstantNodeRadiusStrategy implements NodeRadiusStrategy {
 
     @Override
     public double getNodeRadius(Node node) {
-        return 15.0;
+        return VERTEX_RADIUS;
     }
 
 }

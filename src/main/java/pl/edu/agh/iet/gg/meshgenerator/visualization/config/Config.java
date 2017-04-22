@@ -1,6 +1,6 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.config;
 
-import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualizer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,6 +33,15 @@ public class Config {
         }
     }
 
+    public static float getFloat(String key) {
+        Properties properties = getProperties();
+        try {
+            return Float.parseFloat(properties.getProperty(key));
+        } catch (NumberFormatException exc) {
+            return 0.0f;
+        }
+    }
+
     public static double getDouble(String key) {
         Properties properties = getProperties();
         try {
@@ -53,7 +62,7 @@ public class Config {
     private static void openPropertiesFile() {
         properties = new Properties();
         try (InputStream inputStream =
-                     new FileInputStream(GraphVisualiser.class.getResource("config/visualizer.properties").getPath())) {
+                     new FileInputStream(GraphVisualizer.class.getResource("config/visualizer.properties").getPath())) {
             properties.load(inputStream);
         } catch (IOException exc) {
             exc.printStackTrace();

@@ -1,6 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl;
 
 import pl.edu.agh.iet.gg.meshgenerator.model.Edge;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
 
 /**
@@ -8,9 +9,12 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.Edg
  */
 public class DecreasingEdgeRadiusStrategy implements EdgeRadiusStrategy {
 
+    private static final double DECREASING_FACTOR = Config.getDouble("component.edge.RadiusDecreasingFactor");
+
+
     @Override
     public double getEdgeRadius(Edge edge) {
-        return Math.pow(0.8, edge.getA().getLevel()) * 4;
+        return Math.pow(DECREASING_FACTOR, edge.getA().getLevel()) * EDGE_RADIUS;
     }
 
 }

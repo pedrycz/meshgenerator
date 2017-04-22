@@ -7,7 +7,7 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 /**
  * @author Bartłomiej Grochal
  */
-public class GraphVisualiser extends Application {
+public class GraphVisualizer extends Application {
 
     public static void main(String[] args) {
         launch(args);

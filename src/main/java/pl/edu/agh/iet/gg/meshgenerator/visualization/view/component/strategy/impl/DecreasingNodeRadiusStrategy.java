@@ -1,6 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl;
 
 import pl.edu.agh.iet.gg.meshgenerator.model.Node;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodeRadiusStrategy;
 
 /**
@@ -8,9 +9,12 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.Nod
  */
 public class DecreasingNodeRadiusStrategy implements NodeRadiusStrategy {
 
+    private static final double DECREASING_FACTOR = Config.getDouble("component.vertex.RadiusDecreasingFactor");
+
+
     @Override
     public double getNodeRadius(Node node) {
-        return Math.pow(0.8, node.getLevel()) * 15;
+        return Math.pow(DECREASING_FACTOR, node.getLevel()) * VERTEX_RADIUS;
     }
 
 }

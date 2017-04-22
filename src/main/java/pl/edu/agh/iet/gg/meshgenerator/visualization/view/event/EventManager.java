@@ -1,18 +1,18 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.event;
 
 import javafx.scene.Node;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 
 /**
  * @author Bartłomiej Grochal
  */
 public interface EventManager {
 
-    // TODO: Move all to properties.
-    double ROTATION_SPEED = 2.0;    // Single event caught rotates group by ROTATION_SPEED degrees.
+    double ROTATION_SPEED = Config.getDouble("rotation.Speed");
 
-    double MAX_ZOOM_SCALE = 5.0;
-    double MIN_ZOOM_SCALE = 0.5;
-    double ZOOM_SCALE = 1.1;
+    double MIN_ZOOM_SCALE = Config.getDouble("zoom.MinScale");
+    double MAX_ZOOM_SCALE = Config.getDouble("zoom.MaxScale");
+    double ZOOM_SCALE = Config.getDouble("zoom.ScaleFactor");
 
 
     void setHandlers(Node target);

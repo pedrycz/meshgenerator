@@ -1,6 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy;
 
 import javafx.scene.transform.Transform;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.RotateDirection;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.PlaneRotate;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.transformation.XYRotate;
@@ -43,8 +44,8 @@ public class AroundAxisRotationStrategy implements RotationStrategy {
 
     @Override
     public void setInitialValues() {
-        setRotationYZ(-55.0);
-        setRotationXY(-35.0);
+        setRotationYZ(Config.getDouble("rotation.axis.YZInitialValue"));
+        setRotationXY(Config.getDouble("rotation.axis.XYInitialValue"));
     }
 
     @Override

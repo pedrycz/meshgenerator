@@ -4,7 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.Stage;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualizer;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.VertexFactory;
 
@@ -23,13 +24,13 @@ public final class MainWindowUtil {
 
 
     public static void setMainWindowAttributes(Stage stage, String mainWindowViewResourcePath) throws IOException {
-        stage.setTitle("Graph Visualiser");
+        stage.setTitle("Graph Visualizer");
 
-        FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
+        FXMLLoader mainLoader = new FXMLLoader(GraphVisualizer.class.getResource(mainWindowViewResourcePath));
         Parent root = mainLoader.load();
 
         mainWindowController = mainLoader.getController();
-        Scene mainWindowScene = new Scene(root, 800, 600);
+        Scene mainWindowScene = new Scene(root, Config.getDouble("window.Width"), Config.getDouble("window.Height"));
         stage.setScene(mainWindowScene);
         stage.show();
     }
@@ -56,9 +57,7 @@ public final class MainWindowUtil {
         Camera graphSceneCamera = new PerspectiveCamera(true);
         graphSceneCamera.setNearClip(0.1);
         graphSceneCamera.setFarClip(10000.0);
-        graphSceneCamera.setTranslateX(0.0);
-        graphSceneCamera.setTranslateY(0.0);
-        graphSceneCamera.setTranslateZ(-1500.0);
+        graphSceneCamera.setTranslateZ(Config.getDouble("zoom.Initial"));
 
         return graphSceneCamera;
     }

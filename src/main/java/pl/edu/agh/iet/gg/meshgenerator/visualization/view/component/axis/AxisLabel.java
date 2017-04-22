@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 
 /**
  * @author Bartłomiej Grochal
@@ -19,7 +20,7 @@ public class AxisLabel extends Label {
 
 
     private void initialize(double[] translations) {
-        setFont(Font.font(30.0));
+        setFont(Font.font(Config.getDouble("component.axis.LabelFontSize")));
 
         setTranslateX(translations[0]);
         setTranslateY(translations[1]);
