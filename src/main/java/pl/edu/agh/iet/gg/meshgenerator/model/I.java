@@ -122,7 +122,7 @@ public class I extends Node {
                 northern.getBelow().get().getSW(),
                 southern.getBelow().get().getNW(),
                 southern.getBelow().get().getNE(),
-                southern.getBelow().get().getSE());
+                northern.getBelow().get().getSE());
 
         return ProductionResults.merge(pr1, pr2, pr3);
     }
