@@ -5,10 +5,17 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.Edge;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph.Vertex;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.menu.CenteredTextField;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * @author Bartłomiej Grochal
@@ -52,6 +59,38 @@ public class MenuController {
                 eventSource.setValid(true);
             }
         }
+    }
+
+    @FXML
+    private void repaintGraph(MouseEvent mouseEvent) {
+        Predicate<Node> verticesPredicate = node -> (node instanceof Vertex);
+        Predicate<Node> edgesPredicate = node -> (node instanceof Edge);
+
+        Predicate<Node> verticesToShowPredicate = node ->
+                ((Vertex) node).getNode().getLevel() >= getNumberFieldValue(graphFirstLevel) &&
+                ((Vertex) node).getNode().getLevel() <= getNumberFieldValue(graphLastLevel);
+        Predicate<Node> edgesToShowPredicate = node ->
+                ((Edge) node).getEdge().getA().getLevel() >= getNumberFieldValue(graphFirstLevel) &&
+                ((Edge) node).getEdge().getB().getLevel() <= getNumberFieldValue(graphLastLevel);
+
+        List<Node> graphVisualization =
+                MainWindowUtil.getMainWindowController().getGraphController().getGraphGroup().getChildren();
+
+        // Hiding unwanted elements.
+        graphVisualization.stream()
+                .filter(verticesPredicate.and(verticesToShowPredicate.negate()))
+                .forEach(node -> node.setVisible(false));
+        graphVisualization.stream()
+                .filter(edgesPredicate.and(edgesToShowPredicate.negate()))
+                .forEach(node -> node.setVisible(false));
+
+        // Showing requested elements.
+        graphVisualization.stream()
+                .filter(verticesPredicate.and(verticesToShowPredicate))
+                .forEach(node -> node.setVisible(true));
+        graphVisualization.stream()
+                .filter(edgesPredicate.and(edgesToShowPredicate))
+                .forEach(node -> node.setVisible(true));
     }
 
 

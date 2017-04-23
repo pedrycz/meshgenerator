@@ -1,5 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import java.util.OptionalInt;
+
 /**
  * @author Wojciech Pachuta.
  */
@@ -18,8 +20,27 @@ public class Graph {
     }
 
     public int getLevelsNumber() {
-        // TODO: This is only a mock-up. Implement this method.
-        return 3;
+        return getLevelsNumberRecursively(root);
+    }
+
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    private int getLevelsNumberRecursively(Node subTreeRoot) {
+        if (subTreeRoot instanceof E) {
+            if (!((E) subTreeRoot).getBelow().isPresent()) {
+                return 1;
+            }
+            return getLevelsNumberRecursively(((E) subTreeRoot).getBelow().get()) + 1;
+        }
+
+        if (subTreeRoot instanceof I) {
+            OptionalInt maxLevels =
+                    ((I) subTreeRoot).getLevelNeighbours().stream().mapToInt(this::getLevelsNumberRecursively).max();
+            return maxLevels.getAsInt();
+        }
+
+        // This statement should be unreachable.
+        return 0;
     }
 
 }

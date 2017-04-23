@@ -18,8 +18,7 @@
         <MenuItemLabel GridPane.rowIndex="3" text="Last level:"/>
         <CenteredTextField fx:id="graphLastLevel" GridPane.rowIndex="3" onFocusedChange="#validateGraphLevel"/>
 
-        <!-- TODO: Implement this behaviour. -->
-        <FullWidthButton fx:id="repaintButton" GridPane.rowIndex="4" text="Repaint"/>
+        <FullWidthButton fx:id="repaintButton" GridPane.rowIndex="4" text="Repaint" onMouseClicked="#repaintGraph"/>
     </MenuGroup>
 
     <MenuGroup GridPane.rowIndex="1">

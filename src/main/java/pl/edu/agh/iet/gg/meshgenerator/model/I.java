@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.model;
 
 import com.google.common.collect.Lists;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -167,6 +168,11 @@ public class I extends Node {
         checkState(canApplyP2d(northern, southern));
         return applyP2Vertically(northern, southern);
     }
+
+    public List<E> getLevelNeighbours() {
+        return Arrays.asList(getNW(), getSW(), getSE(), getNE());
+    }
+
 
     private static ProductionResults createConnectedToExistingNodesAndGetChanges(E above, E nw, E sw, E se, E ne) {
         checkArgument(sw.getE().map(x -> x.equals(se)).orElseGet(() -> false));

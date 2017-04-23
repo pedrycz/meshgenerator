@@ -37,7 +37,7 @@ public class EdgeFactory implements ComponentFactory {
         double angle = Math.acos(dy / length) * 180 / Math.PI;
 
         return new Edge(edgeRadiusStrategy.getEdgeRadius(edge), length, axis, -angle,
-                new double[] {average(n1p[0], n2p[0]), average(n1p[1], n2p[1]), average(n1p[2], n2p[2])});
+                new double[]{average(n1p[0], n2p[0]), average(n1p[1], n2p[1]), average(n1p[2], n2p[2])}, edge);
     }
 
 }
