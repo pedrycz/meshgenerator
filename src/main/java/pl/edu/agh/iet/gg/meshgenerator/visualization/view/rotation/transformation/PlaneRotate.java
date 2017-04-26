@@ -16,11 +16,11 @@ public abstract class PlaneRotate extends Affine {
 
 
     public final double getAngle() {
-        return angle == null ? 0.0 : angle.get();
+        return angle == null ? 0.0 : angle.get() / Math.PI * 180;
     }
 
     public final void setAngle(double angle) {
-        angleProperty().set(angle);
+        angleProperty().set((angle / 180 * Math.PI) % (2 * Math.PI));
     }
 
     public final DoubleProperty angleProperty() {

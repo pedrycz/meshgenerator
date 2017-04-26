@@ -1,13 +1,13 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.util.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Camera;
-import javafx.scene.Parent;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.stage.Stage;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualiser;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.GraphVisualizer;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.VertexFactory;
 
 import java.io.IOException;
 
@@ -24,22 +24,25 @@ public final class MainWindowUtil {
 
 
     public static void setMainWindowAttributes(Stage stage, String mainWindowViewResourcePath) throws IOException {
-        stage.setTitle("Graph Visualiser");
+        stage.setTitle("Graph Visualizer");
 
-        FXMLLoader mainLoader = new FXMLLoader(GraphVisualiser.class.getResource(mainWindowViewResourcePath));
+        FXMLLoader mainLoader = new FXMLLoader(GraphVisualizer.class.getResource(mainWindowViewResourcePath));
         Parent root = mainLoader.load();
 
-        Scene mainWindowScene = new Scene(root, 800, 600, true);
-        mainWindowScene.setCamera(getMainWindowCamera());
+        mainWindowController = mainLoader.getController();
+        Scene mainWindowScene = new Scene(root, Config.getDouble("window.Width"), Config.getDouble("window.Height"));
         stage.setScene(mainWindowScene);
         stage.show();
+    }
 
-        // We need to set event handlers outside the initialize() method of the controller, because:
+    public static void initializeMainWindow() {
+        // We need to call these methods outside the initialize() method of the controller, because:
         // 1) some handlers are set on main scene, which value is null during initialization of the controller;
         // 2) method for initializing graph calls the controller's methods.
-        mainWindowController = mainLoader.getController();
         mainWindowController.setEventManagers();
-        mainWindowController.initializeGraph();
+        mainWindowController.getGraphController()
+                .initializeGraph((VertexFactory) mainWindowController.getComponentFactories().get(VertexFactory.class));
+        mainWindowController.getGraphController().setCameraHandlers(mainWindowController.getEventManagers());
     }
 
     /**
@@ -50,16 +53,21 @@ public final class MainWindowUtil {
         return mainWindowController;
     }
 
+    public static Camera getGraphSceneCamera() {
+        Camera graphSceneCamera = new PerspectiveCamera(true);
+        graphSceneCamera.setNearClip(0.1);
+        graphSceneCamera.setFarClip(10000.0);
+        graphSceneCamera.setTranslateZ(Config.getDouble("zoom.Initial"));
 
-    private static Camera getMainWindowCamera() {
-        Camera mainWindowCamera = new PerspectiveCamera(true);
-        mainWindowCamera.setNearClip(0.1);
-        mainWindowCamera.setFarClip(10000.0);
-        mainWindowCamera.setTranslateX(0.0);
-        mainWindowCamera.setTranslateY(0.0);
-        mainWindowCamera.setTranslateZ(-1500.0);
+        return graphSceneCamera;
+    }
 
-        return mainWindowCamera;
+    public static void gainFocus(Node node) {
+        Platform.runLater(() -> {
+            if (!node.isFocused()) {
+                node.requestFocus();
+            }
+        });
     }
 
 }

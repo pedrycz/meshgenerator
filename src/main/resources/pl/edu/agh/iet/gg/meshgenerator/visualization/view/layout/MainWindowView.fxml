@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
-<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.XAxis?>
-<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.YAxis?>
-<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.ZAxis?>
-<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
 
+<GridPane xmlns="http://javafx.com/javafx/8.0.112-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController"
+          hgap="5">
 
-<RotatableGroup xmlns="http://javafx.com/javafx/8"
-                xmlns:fx="http://javafx.com/fxml/1"
-                fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController"
-                fx:id="environmentGroup">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5"/>
+    </padding>
 
-    <Group>
-        <XAxis/>
-        <YAxis/>
-        <ZAxis/>
-    </Group>
+    <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <fx:include fx:id="menuPane" source="MenuView.fxml"/>
+    </Pane>
 
-    <Group fx:id="graphGroup"/>
+    <Pane GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <fx:include fx:id="graphScene" source="GraphView.fxml"/>
+    </Pane>
 
-</RotatableGroup>
+</GridPane>

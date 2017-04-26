@@ -1,19 +1,16 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
+import javafx.scene.SubScene;
+import javafx.scene.layout.GridPane;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.EdgeFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.VertexFactory;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.EdgeRadiusStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodePositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.ConstantEdgeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.ConstantNodeRadiusStrategy;
-import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.impl.GridPositioningStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.keyboard.CameraGroupKeyboardEventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.CameraGroupMouseEventManager;
@@ -27,39 +24,33 @@ import java.util.Map;
  */
 public class MainWindowController {
 
-    @FXML private RotatableGroup environmentGroup;
-    @FXML private Group graphGroup;
+    @FXML private SubScene graphScene;
+    @FXML private GridPane menuPane;
+    @FXML private GraphController graphSceneController;
+    @FXML private MenuController menuPaneController;
 
     private Map<Class, ComponentFactory> componentFactories;
     private Map<Class, EventManager> eventManagers;
-    private Graph graph;
 
 
     @FXML
     @SuppressWarnings("unused")
     private void initialize() {
-        environmentGroup.getRotationStrategy().setInitialValues();
+        graphScene.setCamera(MainWindowUtil.getGraphSceneCamera());
         setComponentFactories();
     }
 
 
-    public void initializeGraph() {
-        this.graph = new Graph();
-
-        Node root = ((VertexFactory) componentFactories.get(VertexFactory.class)).getVertex(graph.getRoot());
-        graphGroup.getChildren().add(root);
+    public GraphController getGraphController() {
+        return graphSceneController;
     }
 
-    public RotatableGroup getEnvironmentGroup() {
-        return environmentGroup;
+    public MenuController getMenuController() {
+        return menuPaneController;
     }
 
-    public Group getGraphGroup() {
-        return graphGroup;
-    }
-
-    public Graph getGraph() {
-        return graph;
+    public Map<Class, ComponentFactory> getComponentFactories() {
+        return componentFactories;
     }
 
     public Map<Class, EventManager> getEventManagers() {
@@ -71,25 +62,26 @@ public class MainWindowController {
 
         eventManagers.put(CameraGroupMouseEventManager.class, new CameraGroupMouseEventManager());
         eventManagers.put(CameraGroupKeyboardEventManager.class, new CameraGroupKeyboardEventManager());
-        eventManagers.values().forEach(eventManager -> eventManager.setHandlers(environmentGroup));
-
         eventManagers.put(VertexMouseEventManager.class, new VertexMouseEventManager());
-    }
-
-    public Map<Class, ComponentFactory> getComponentFactories() {
-        return componentFactories;
     }
 
 
     private void setComponentFactories() {
         componentFactories = new HashMap<>();
 
-        NodePositioningStrategy nodePositioningStrategy = new GridPositioningStrategy();
-        NodeRadiusStrategy nodeRadiusStrategy = new ConstantNodeRadiusStrategy();
-        EdgeRadiusStrategy edgeRadiusStrategy = new ConstantEdgeRadiusStrategy();
+        try {
+            NodePositioningStrategy nodePositioningStrategy =
+                    (NodePositioningStrategy) Class.forName(Config.getString("strategy.NodePositioning")).newInstance();
+            NodeRadiusStrategy nodeRadiusStrategy =
+                    (NodeRadiusStrategy) Class.forName(Config.getString("strategy.NodeRadius")).newInstance();
+            EdgeRadiusStrategy edgeRadiusStrategy =
+                    (EdgeRadiusStrategy) Class.forName(Config.getString("strategy.EdgeRadius")).newInstance();
 
-        componentFactories.put(VertexFactory.class, new VertexFactory(nodePositioningStrategy, nodeRadiusStrategy));
-        componentFactories.put(EdgeFactory.class, new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy));
+            componentFactories.put(VertexFactory.class, new VertexFactory(nodePositioningStrategy, nodeRadiusStrategy));
+            componentFactories.put(EdgeFactory.class, new EdgeFactory(edgeRadiusStrategy, nodePositioningStrategy));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exc) {
+            exc.printStackTrace();
+        }
     }
 
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.SubScene?>
+<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.XAxis?>
+<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.YAxis?>
+<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.axis.ZAxis?>
+<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup?>
+
+<SubScene xmlns="http://javafx.com/javafx/8.0.112-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.GraphController"
+          depthBuffer="true" height="600" width="640">
+
+    <root>
+        <RotatableGroup fx:id="environmentGroup">
+            <Group>
+                <XAxis/>
+                <YAxis/>
+                <ZAxis/>
+            </Group>
+
+            <Group fx:id="graphGroup"/>
+        </RotatableGroup>
+    </root>
+
+</SubScene>

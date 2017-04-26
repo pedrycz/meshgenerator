@@ -2,6 +2,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.view.rotation.strategy;
 
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.config.Config;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.RotateDirection;
 
 import java.util.Arrays;
@@ -14,10 +15,6 @@ import static pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventMana
  */
 @SuppressWarnings("unused")
 public class AroundPivotRotationStrategy implements RotationStrategy {
-
-    // TODO: Move to properties. Unify with the same constant in the AroundPivotRotationStrategy class.
-    private static final double KEYBOARD_DELTA = 1.0;
-
 
     /**
      * Defines rotation of this group around specified {@code pivot} point, along X axis.
@@ -44,9 +41,9 @@ public class AroundPivotRotationStrategy implements RotationStrategy {
 
     @Override
     public void setInitialValues() {
-        setRotationX(-45.0);
-        setRotationY(-45.0);
-        setRotationZ(-35.0);
+        setRotationX(Config.getDouble("rotation.pivot.XInitialValue"));
+        setRotationY(Config.getDouble("rotation.pivot.YInitialValue"));
+        setRotationZ(Config.getDouble("rotation.pivot.ZInitialValue"));
     }
 
     @Override
@@ -123,7 +120,7 @@ public class AroundPivotRotationStrategy implements RotationStrategy {
 
 
     private void setKeyboardRotation(Rotate rotation, RotateDirection direction) {
-        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * KEYBOARD_DELTA * ROTATION_SPEED);
+        rotation.setAngle(rotation.getAngle() + direction.getDirectionSign() * ROTATION_SPEED);
     }
 
 }

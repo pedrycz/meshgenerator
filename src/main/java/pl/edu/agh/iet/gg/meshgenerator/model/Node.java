@@ -2,21 +2,21 @@ package pl.edu.agh.iet.gg.meshgenerator.model;
 
 
 public abstract class Node {
-    private final int offsetX;
-    private final int offsetY;
+    private final double offsetX;
+    private final double offsetY;
     private final int level;
 
-    public Node(int offsetX, int offsetY, int level) {
+    public Node(double offsetX, double offsetY, int level) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.level = level;
     }
 
-    public int getOffsetX() {
+    public double getOffsetX() {
         return offsetX;
     }
 
-    public int getOffsetY() {
+    public double getOffsetY() {
         return offsetY;
     }
 

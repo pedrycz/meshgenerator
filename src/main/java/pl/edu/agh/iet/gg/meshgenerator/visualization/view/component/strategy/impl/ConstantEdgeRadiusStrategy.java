@@ -10,7 +10,7 @@ public class ConstantEdgeRadiusStrategy implements EdgeRadiusStrategy {
 
     @Override
     public double getEdgeRadius(Edge edge) {
-        return 7;
+        return EDGE_RADIUS;
     }
 
 }

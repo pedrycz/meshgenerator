@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.menu.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.112-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MenuController"
+          prefHeight="600" prefWidth="150">
+
+    <!-- Configuring graph levels to show. -->
+    <MenuGroup GridPane.rowIndex="0">
+        <GroupLabel text="Graph levels to show:"/>
+
+        <MenuItemLabel GridPane.rowIndex="2" text="First level:"/>
+        <CenteredTextField fx:id="graphFirstLevel" GridPane.rowIndex="2" onFocusedChange="#validateGraphLevel"/>
+
+        <MenuItemLabel GridPane.rowIndex="3" text="Last level:"/>
+        <CenteredTextField fx:id="graphLastLevel" GridPane.rowIndex="3" onFocusedChange="#validateGraphLevel"/>
+
+        <FullWidthButton fx:id="repaintButton" GridPane.rowIndex="4" text="Repaint" onMouseClicked="#repaintGraph"/>
+    </MenuGroup>
+
+    <MenuGroup GridPane.rowIndex="1">
+        <GroupLabel text="Serialization:"/>
+
+        <MenuItemLabel GridPane.rowIndex="2" text="Serialize:"/>
+        <FullWidthButton GridPane.rowIndex="2" text="Save"/>
+
+        <MenuItemLabel GridPane.rowIndex="3" text="Deserialize:"/>
+        <FullWidthButton GridPane.rowIndex="3" text="Open"/>
+    </MenuGroup>
+
+    <!-- Closing separator -->
+    <MenuSeparator GridPane.rowIndex="2"/>
+
+</GridPane>

@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventManager;
 
@@ -28,6 +29,7 @@ public class CameraGroupMouseEventManager implements EventManager {
         return event -> {
             lastPressedPositionX = event.getSceneX();
             lastPressedPositionY = event.getSceneY();
+            MainWindowUtil.gainFocus(target);
         };
     }
 
