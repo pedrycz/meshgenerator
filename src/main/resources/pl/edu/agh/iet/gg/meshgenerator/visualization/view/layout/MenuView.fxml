@@ -31,7 +31,16 @@
         <FullWidthButton GridPane.rowIndex="3" text="Open"/>
     </MenuGroup>
 
+    <MenuGroup GridPane.rowIndex="2">
+        <GroupLabel text="Productions:"/>
+
+        <MenuItemLabel GridPane.rowIndex="2" text="P1: press 1"/>
+        <MenuItemLabel GridPane.rowIndex="3" text="P2: press W/A/S/D"/>
+        <MenuItemLabel GridPane.rowIndex="4" text="P3: press 3"/>
+
+    </MenuGroup>
+
     <!-- Closing separator -->
-    <MenuSeparator GridPane.rowIndex="2"/>
+    <MenuSeparator GridPane.rowIndex="3"/>
 
 </GridPane>

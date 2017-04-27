@@ -28,7 +28,7 @@ public class VertexProductionKeyboardEventManager implements EventManager {
             pl.edu.agh.iet.gg.meshgenerator.model.Node activeNode = getMainWindowController().getGraphController().getActiveNode();
 
             switch (event.getCode()) {
-                case A:
+                case D:
                     if (activeNode instanceof I) {
 
                         /* Trying to apply production P2a. */
@@ -41,7 +41,7 @@ public class VertexProductionKeyboardEventManager implements EventManager {
                         visualizeProductionResults(results);
                     }
                     break;
-                case B:
+                case W:
                     if (activeNode instanceof I) {
 
                         /* Trying to apply production P2b. */
@@ -54,7 +54,7 @@ public class VertexProductionKeyboardEventManager implements EventManager {
                         visualizeProductionResults(results);
                     }
                     break;
-                case C:
+                case A:
                     if (activeNode instanceof I) {
 
                         /* Trying to apply production P2c. */
@@ -67,7 +67,7 @@ public class VertexProductionKeyboardEventManager implements EventManager {
                         visualizeProductionResults(results);
                     }
                     break;
-                case D:
+                case S:
                     if (activeNode instanceof I) {
 
                         /* Trying to apply production P2d. */
@@ -81,7 +81,6 @@ public class VertexProductionKeyboardEventManager implements EventManager {
                     }
                     break;
                 case DIGIT1:
-                    System.out.println("Trying to apply P1");
                     if (activeNode instanceof E) {
 
                         /* Applying production P1 if possible */
@@ -96,13 +95,15 @@ public class VertexProductionKeyboardEventManager implements EventManager {
                     }
                     break;
                 case DIGIT3:
-                    System.out.println("Trying to apply P3");
                     if (activeNode instanceof I) {
 
                         /* Applying production P3 if possible */
                         I node = (I) activeNode;
 
-                        // TODO: this assumes that the P3 CAN be applied
+                        if (!E.canApplyP3(node)){
+                            return;
+                        }
+
                         E e1 = node.getSW().getBelow().get().getNE();
                         E e2 = node.getNW().getBelow().get().getSE();
                         E e3 = node.getNE().getBelow().get().getSW();
