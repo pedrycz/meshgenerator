@@ -13,6 +13,7 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.Nod
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.strategy.NodeRadiusStrategy;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.EventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.keyboard.CameraGroupKeyboardEventManager;
+import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.keyboard.VertexProductionKeyboardEventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.CameraGroupMouseEventManager;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.VertexMouseEventManager;
 
@@ -62,6 +63,7 @@ public class MainWindowController {
 
         eventManagers.put(CameraGroupMouseEventManager.class, new CameraGroupMouseEventManager());
         eventManagers.put(CameraGroupKeyboardEventManager.class, new CameraGroupKeyboardEventManager());
+        eventManagers.put(VertexProductionKeyboardEventManager.class, new VertexProductionKeyboardEventManager());
         eventManagers.put(VertexMouseEventManager.class, new VertexMouseEventManager());
     }
 
