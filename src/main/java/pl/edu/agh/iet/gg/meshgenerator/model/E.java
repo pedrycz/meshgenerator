@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 public class E extends Node {
