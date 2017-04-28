@@ -3,6 +3,8 @@
 <?import javafx.scene.layout.*?>
 <?import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.menu.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.112-ea"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MenuController"
@@ -32,11 +34,16 @@
     </MenuGroup>
 
     <MenuGroup GridPane.rowIndex="2">
-        <GroupLabel text="Productions:"/>
+        <GroupLabel text="Production keys:" />
 
-        <MenuItemLabel GridPane.rowIndex="2" text="P1: press 1"/>
-        <MenuItemLabel GridPane.rowIndex="3" text="P2: press W/A/S/D"/>
-        <MenuItemLabel GridPane.rowIndex="4" text="P3: press 3"/>
+        <MenuItemLabel GridPane.rowIndex="2" text="P1: 1"/>
+        <MenuItemLabel GridPane.rowIndex="3" text="P2: W/A/S/D"/>
+        <Pane GridPane.rowIndex="4">
+            <ImageView fitWidth="110" preserveRatio="true">
+                <Image url="pl/edu/agh/iet/gg/meshgenerator/visualization/images/p2_keys.png"/>
+            </ImageView>
+        </Pane>
+        <MenuItemLabel GridPane.rowIndex="5" text="P3: 3"/>
 
     </MenuGroup>
 
