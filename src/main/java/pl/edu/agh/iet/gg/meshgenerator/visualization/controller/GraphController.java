@@ -24,7 +24,6 @@ public class GraphController {
     @FXML private Group graphGroup;
 
     private Graph graph;
-    private pl.edu.agh.iet.gg.meshgenerator.model.Node activeNode;
     private Vertex activeVertex;
 
     @FXML
@@ -41,7 +40,6 @@ public class GraphController {
         Node root = vertexFactory.getVertex(graph.getRoot());
         graphGroup.getChildren().add(root);
 
-        this.activeNode = graph.getRoot();
         this.activeVertex = vertexFactory.getVertex(graph.getRoot());
     }
 
@@ -64,15 +62,12 @@ public class GraphController {
     }
 
     public pl.edu.agh.iet.gg.meshgenerator.model.Node getActiveNode() {
-        return activeNode;
-    }
-
-    public void setActiveNode(pl.edu.agh.iet.gg.meshgenerator.model.Node activeNode) {
-        this.activeNode = activeNode;
+        return activeVertex.getNode();
     }
 
     public void setNewActiveVertex(Vertex newActiveVertex) {
-        this.activeVertex.setAsInactive();
-        this.activeVertex = newActiveVertex;
+        activeVertex.setAsInactive();
+        newActiveVertex.setAsActive();
+        activeVertex = newActiveVertex;
     }
 }
