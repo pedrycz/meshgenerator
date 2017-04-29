@@ -14,7 +14,7 @@ import static pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.NodeUtil.v
 /**
  * @author Piotr Oramus
  */
-public class VertexProductionKeyboardEventManager implements EventManager {
+public class ProductionKeyboardEventManager implements EventManager {
 
     @Override
     public void setHandlers(Node target) {

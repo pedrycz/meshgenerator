@@ -1,5 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.graph;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.shape.Sphere;
 import pl.edu.agh.iet.gg.meshgenerator.model.E;
 import pl.edu.agh.iet.gg.meshgenerator.model.I;
@@ -13,12 +15,13 @@ import pl.edu.agh.iet.gg.meshgenerator.visualization.view.event.mouse.VertexMous
 public class Vertex extends Sphere {
 
     private final Node node;
-
+    private BooleanProperty isActiveProperty;
 
     public Vertex(double radius, double[] translations, Node node) {
         super(radius);
 
         this.node = node;
+        this.isActiveProperty = new SimpleBooleanProperty(false);
         initialize(translations);
     }
 
@@ -30,13 +33,27 @@ public class Vertex extends Sphere {
 
         if (node instanceof I) {
             setMaterial(Constants.I_VERTEX_MATERIAL);
+            isActiveProperty.addListener((observable, oldValue, newValue) -> {
+                if (newValue)
+                    // vertex set as active (clicked)
+                    setMaterial(Constants.I_ACTIVE_VERTEX_MATERIAL);
+                else
+                    // vertex no longer active
+                    setMaterial(Constants.I_VERTEX_MATERIAL);
+            });
         } else {
             setMaterial(((E) node).isExpanded() ?
                     Constants.E_VERTEX_EXPANDED_MATERIAL : Constants.E_VERTEX_UNEXPANDED_MATERIAL);
 
-            ((E) node).isExpandedProperty().addListener((observable, oldValue, newValue) ->
-                    setMaterial(Constants.E_VERTEX_EXPANDED_MATERIAL)   // When value changed, node can be expanded only.
-            );
+            isActiveProperty.addListener((observable, oldValue, newValue) -> {
+                if (newValue)
+                    // vertex set as active (clicked)
+                    setMaterial(Constants.E_ACTIVE_VERTEX_MATERIAL);
+                else
+                    // vertex no longer active
+                    setMaterial(((E) node).isExpanded() ?
+                        Constants.E_VERTEX_EXPANDED_MATERIAL : Constants.E_VERTEX_UNEXPANDED_MATERIAL);
+            });
         }
 
         setEventHandlers();
@@ -52,4 +69,11 @@ public class Vertex extends Sphere {
         return node;
     }
 
+    public void setAsActive() {
+        this.isActiveProperty.set(true);
+    }
+
+    public void setAsInactive() {
+        this.isActiveProperty.set(false);
+    }
 }

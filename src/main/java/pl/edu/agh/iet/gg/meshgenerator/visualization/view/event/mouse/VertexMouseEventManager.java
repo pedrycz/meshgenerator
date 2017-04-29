@@ -35,7 +35,9 @@ public class VertexMouseEventManager implements EventManager {
             }
 
             Vertex targetCasted = (Vertex) target;
+            targetCasted.setAsActive();
             getMainWindowController().getGraphController().setActiveNode(targetCasted.getNode());
+            getMainWindowController().getGraphController().setNewActiveVertex(targetCasted);
 
         };
     }
