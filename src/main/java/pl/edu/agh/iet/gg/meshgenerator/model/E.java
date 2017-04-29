@@ -149,18 +149,22 @@ public class E extends Node {
 
     public static boolean canApplyP3(I node) {
 
-        //check only necessary conditions
         boolean expanded = node.getSW().isExpanded() &&
                 node.getNW().isExpanded() &&
                 node.getNE().isExpanded() &&
                 node.getSE().isExpanded();
 
         return expanded &&
+                // all required P2-level productions had been applied
                 node.getSW().getBelow().get().getNE().isConnectedN() &&
                 node.getSW().getBelow().get().getNE().isConnectedE() &&
                 node.getNE().getBelow().get().getSW().isConnectedW() &&
-                node.getNE().getBelow().get().getSW().isConnectedS();
-
+                node.getNE().getBelow().get().getSW().isConnectedS() &&
+                // P3 itself had not been applied
+                !node.getSW().getBelow().get().getNE().isConnectedNE() &&
+                !node.getSE().getBelow().get().getNW().isConnectedNW() &&
+                !node.getNW().getBelow().get().getSE().isConnectedSE() &&
+                !node.getNE().getBelow().get().getSW().isConnectedSW();
     }
 
     public static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
