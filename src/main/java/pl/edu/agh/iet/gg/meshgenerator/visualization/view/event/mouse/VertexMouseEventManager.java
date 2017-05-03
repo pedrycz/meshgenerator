@@ -35,28 +35,8 @@ public class VertexMouseEventManager implements EventManager {
             }
 
             Vertex targetCasted = (Vertex) target;
+            getMainWindowController().getGraphController().setNewActiveVertex(targetCasted);
 
-            if (targetCasted.getNode() instanceof E) {
-                /* Applying production on E node. */
-
-                E node = (E) targetCasted.getNode();
-                if (!node.canApplyP1()) {
-                    return;
-                }
-
-                ProductionResults results = node.applyP1();
-                visualizeProductionResults(results);
-            } else if (targetCasted.getNode() instanceof I) {
-                /* Applying production on I node. */
-
-                I node = (I) targetCasted.getNode();
-                if (!node.canApplyP2a(node.getNW(), node.getNE())) {
-                    return;
-                }
-
-                ProductionResults results = node.applyP2a(node.getNW(), node.getNE());
-                visualizeProductionResults(results);
-            }
         };
     }
 

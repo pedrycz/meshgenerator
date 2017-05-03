@@ -14,8 +14,12 @@ public interface Constants {
             new PhongMaterial(Color.valueOf(Config.getString("component.vertex.EVertexUnexpandedColor")));
     Material E_VERTEX_EXPANDED_MATERIAL =
             new PhongMaterial(Color.valueOf(Config.getString("component.vertex.EVertexExpandedColor")));
+    Material E_ACTIVE_VERTEX_MATERIAL =
+            new PhongMaterial(Color.valueOf(Config.getString("component.vertex.EActiveVertexColor")));
     Material I_VERTEX_MATERIAL =
             new PhongMaterial(Color.valueOf(Config.getString("component.vertex.IVertexColor")));
+    Material I_ACTIVE_VERTEX_MATERIAL =
+            new PhongMaterial(Color.valueOf(Config.getString("component.vertex.IActiveVertexColor")));
     Material EDGE_MATERIAL =
             new PhongMaterial(Color.valueOf(Config.getString("component.edge.Color")));
 

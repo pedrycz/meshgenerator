@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 public class E extends Node {
@@ -148,6 +147,26 @@ public class E extends Node {
         return I.createConnectedToNewNodesAndGetChanges(this);
     }
 
+    public static boolean canApplyP3(I node) {
+
+        boolean expanded = node.getSW().isExpanded() &&
+                node.getNW().isExpanded() &&
+                node.getNE().isExpanded() &&
+                node.getSE().isExpanded();
+
+        return expanded &&
+                // all required P2-level productions had been applied
+                node.getSW().getBelow().get().getNE().isConnectedN() &&
+                node.getSW().getBelow().get().getNE().isConnectedE() &&
+                node.getNE().getBelow().get().getSW().isConnectedW() &&
+                node.getNE().getBelow().get().getSW().isConnectedS() &&
+                // P3 itself had not been applied
+                !node.getSW().getBelow().get().getNE().isConnectedNE() &&
+                !node.getSE().getBelow().get().getNW().isConnectedNW() &&
+                !node.getNW().getBelow().get().getSE().isConnectedSE() &&
+                !node.getNE().getBelow().get().getSW().isConnectedSW();
+    }
+
     public static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
         List<E> sorted = Arrays.asList(e1, e2, e3, e4);
         sorted.sort(Comparator.comparing(E::getOffsetX).thenComparing(E::getOffsetY));
@@ -155,12 +174,6 @@ public class E extends Node {
         E se = sorted.get(1);
         E nw = sorted.get(2);
         E ne = sorted.get(3);
-
-        //just in case
-        checkArgument(sw.getOffsetX() + 2 == se.getOffsetX());
-        checkArgument(nw.getOffsetX() + 2 == ne.getOffsetX());
-        checkArgument(sw.getOffsetY() + 2 == nw.getOffsetY());
-        checkArgument(se.getOffsetY() + 2 == ne.getOffsetY());
 
         //important
         checkState(sw.getE().map(x -> x.equals(se)).orElseGet(() -> false));

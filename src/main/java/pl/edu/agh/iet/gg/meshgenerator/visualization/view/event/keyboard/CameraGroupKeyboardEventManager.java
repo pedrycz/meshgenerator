@@ -14,7 +14,7 @@ public class CameraGroupKeyboardEventManager implements EventManager {
 
     @Override
     public void setHandlers(Node target) {
-        target.getScene().setOnKeyPressed(getKeyPressedEventHandler(target));
+        target.getScene().addEventHandler(KeyEvent.KEY_PRESSED, getKeyPressedEventHandler(target));
     }
 
 
