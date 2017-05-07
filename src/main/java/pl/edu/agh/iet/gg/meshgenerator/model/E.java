@@ -1,8 +1,5 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -19,11 +16,8 @@ public class E extends Node {
     private I se; // node on southeast
     private I ne; // node on northeast
 
-    private BooleanProperty isExpandedProperty;
-
     E(double offsetX, double offsetY, int level) {
         super(offsetX, offsetY, level);
-        isExpandedProperty = new SimpleBooleanProperty(below != null);
     }
 
     public Optional<I> getBelow() {
@@ -62,17 +56,12 @@ public class E extends Node {
         return Optional.ofNullable(ne);
     }
 
-    public BooleanProperty isExpandedProperty() {
-        return isExpandedProperty;
-    }
-
     public boolean isExpanded() {
-        return isExpandedProperty.get();
+        return below != null;
     }
 
     void setBelow(I below) {
         this.below = below;
-        isExpandedProperty.set(true);
     }
 
     void setNW(I nw) {

@@ -18,11 +18,11 @@ public class ProductionKeyboardEventManager implements EventManager {
 
     @Override
     public void setHandlers(Node target) {
-        target.getScene().addEventHandler(KeyEvent.KEY_PRESSED, getKeyPressedEventHandler(target));
+        target.getScene().addEventHandler(KeyEvent.KEY_PRESSED, getKeyPressedEventHandler());
     }
 
 
-    private EventHandler<KeyEvent> getKeyPressedEventHandler(Node target) {
+    private EventHandler<KeyEvent> getKeyPressedEventHandler() {
         return event -> {
 
             pl.edu.agh.iet.gg.meshgenerator.model.Node activeNode = getMainWindowController().getGraphController().getActiveNode();
