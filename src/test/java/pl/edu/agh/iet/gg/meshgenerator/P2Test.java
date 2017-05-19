@@ -80,7 +80,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2aOverDiagonalWE(){
+    public void productionP2aShouldNotWorkOverDiagonalWE(){
         I i = pepareDiagonalWE();
 
         i.applyP2a(i.getNW(), i.getSE());
@@ -88,7 +88,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2bOverDiagonalWE(){
+    public void productionP2bShouldNotWorkOverDiagonalWE(){
         I i = pepareDiagonalWE();
 
         i.applyP2b(i.getNW(), i.getSE());
@@ -96,7 +96,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2cOverDiagonalWE(){
+    public void productionP2cShouldNotWorkOverDiagonalWE(){
         I i = pepareDiagonalWE();
 
         i.applyP2c(i.getNW(), i.getSE());
@@ -104,7 +104,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2dOverDiagonalWE(){
+    public void productionP2dShouldNotWorkOverDiagonalWE(){
         I i = pepareDiagonalWE();
 
         i.applyP2d(i.getNW(), i.getSE());
@@ -122,7 +122,7 @@ public class P2Test {
 
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2aOverDiagonalEW(){
+    public void productionP2aShouldNotWorkOverDiagonalEW(){
         I i = pepareDiagonalEW();
 
         i.applyP2a(i.getNE(), i.getSW());
@@ -130,7 +130,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2bOverDiagonalEW(){
+    public void productionP2bShouldNotWorkOverDiagonalEW(){
         I i = pepareDiagonalEW();
 
         i.applyP2b(i.getNE(), i.getSW());
@@ -138,7 +138,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2cOverDiagonalEW(){
+    public void productionP2cShouldNotWorkOverDiagonalEW(){
         I i = pepareDiagonalEW();
 
         i.applyP2c(i.getNE(), i.getSW());
@@ -146,7 +146,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2dOverDiagonalEW(){
+    public void productionP2dShouldNotWorkOverDiagonalEW(){
         I i = pepareDiagonalEW();
 
         i.applyP2d(i.getNE(), i.getSW());
@@ -163,7 +163,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2aOverNonExistingProductions(){
+    public void productionP2aShouldNotWorkOnNonExistingProductions(){
         I i = prepareEmptyGraf();
         i.applyP2a(i.getNE(), i.getSE());
 
@@ -171,21 +171,21 @@ public class P2Test {
 
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2bOverNonExistingProductions(){
+    public void productionP2bShouldNotWorkOnNonExistingProductions(){
         I i = prepareEmptyGraf();
         i.applyP2b(i.getNE(), i.getSE());
 
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2cOverNonExistingProductions(){
+    public void productionP2cShouldNotWorkOnNonExistingProductions(){
         I i = prepareEmptyGraf();
         i.applyP2c(i.getNE(), i.getSE());
 
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2dOverNonExistingProductions(){
+    public void productionP2dShouldNotWorkOnNonExistingProductions(){
         I i = prepareEmptyGraf();
         i.applyP2d(i.getNE(), i.getSE());
 
@@ -198,7 +198,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2aInWrongDirection(){
+    public void productionP2aShouldNotWorkInWrongDirection(){
         I i = prepareEmptyGraf();
 
 
@@ -209,7 +209,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2bInWrongDirection(){
+    public void productionP2bShouldNotWorkInWrongDirection(){
         I i = prepareEmptyGraf();
 
         i.getNW().applyP1();
@@ -220,7 +220,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2cInWrongDirection(){
+    public void productionP2cShouldNotWorkInWrongDirection(){
         I i = prepareEmptyGraf();
 
         i.getSW().applyP1();
@@ -230,7 +230,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2dInWrongDirection(){
+    public void productionP2dShouldNotWorkInWrongDirection(){
         I i = prepareEmptyGraf();
 
         i.getNE().applyP1();
@@ -240,7 +240,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2aWithSameNode(){
+    public void productionP2aShouldNotWorkOnSameNode(){
         I i = prepareEmptyGraf();
 
 
@@ -251,7 +251,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2bWithSameNode(){
+    public void productionP2bShouldNotWorkOnSameNode(){
         I i = prepareEmptyGraf();
 
         i.getNW().applyP1();
@@ -262,7 +262,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2cWithSameNode(){
+    public void productionP2cShouldNotWorkOnSameNode(){
         I i = prepareEmptyGraf();
 
         i.getSW().applyP1();
@@ -272,7 +272,7 @@ public class P2Test {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cantMakeP2dWithSameNode(){
+    public void productionP2dShouldNotWorkOnSameNode(){
         I i = prepareEmptyGraf();
 
         i.getNE().applyP1();
