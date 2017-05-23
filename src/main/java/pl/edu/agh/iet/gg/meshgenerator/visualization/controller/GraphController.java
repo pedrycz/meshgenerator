@@ -3,6 +3,7 @@ package pl.edu.agh.iet.gg.meshgenerator.visualization.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import pl.edu.agh.iet.gg.meshgenerator.model.E;
 import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.util.view.MainWindowUtil;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
@@ -35,12 +36,22 @@ public class GraphController {
 
 
     public void initializeGraph(VertexFactory vertexFactory) {
-        this.graph = new Graph();
+        this.graph = Graph.getInstance();
 
-        Node root = vertexFactory.getVertex(graph.getRoot());
+        preInitializeGraph(vertexFactory, graph.getRoot());
+    }
+
+    public void initializeGraph(VertexFactory vertexFactory, Graph graph) {
+        this.graph = graph;
+        preInitializeGraph(vertexFactory, graph.getRoot());
+    }
+
+    private void preInitializeGraph(VertexFactory vertexFactory, E root2) {
+        Node root = vertexFactory.getVertex(root2);
+//        graphGroup.getChildren().clear();
         graphGroup.getChildren().add(root);
 
-        this.activeVertex = vertexFactory.getVertex(graph.getRoot());
+        this.activeVertex = vertexFactory.getVertex(root2);
     }
 
     public void setCameraHandlers(Map<Class, EventManager> eventManagers) {
@@ -69,5 +80,9 @@ public class GraphController {
         activeVertex.setAsInactive();
         newActiveVertex.setAsActive();
         activeVertex = newActiveVertex;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 }

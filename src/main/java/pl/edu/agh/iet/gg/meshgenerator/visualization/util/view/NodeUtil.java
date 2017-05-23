@@ -4,6 +4,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.transform.NonInvertibleTransformException;
+import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
 import pl.edu.agh.iet.gg.meshgenerator.model.ProductionResults;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.RotatableGroup;
 import pl.edu.agh.iet.gg.meshgenerator.visualization.view.component.factory.ComponentFactory;
@@ -31,6 +32,8 @@ public class NodeUtil {
 
     public static void visualizeProductionResults(ProductionResults results) {
         Map<Class, ComponentFactory> componentFactories = getMainWindowController().getComponentFactories();
+        Graph.getInstance().addEdges(results.getAddedEdges());
+        Graph.getInstance().addVertexes(results.getAddedNodes());
 
         getMainWindowController().getGraphController().getGraphGroup().getChildren().addAll(
                 results.getAddedNodes().stream()

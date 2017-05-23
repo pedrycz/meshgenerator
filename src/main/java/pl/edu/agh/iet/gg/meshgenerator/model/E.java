@@ -1,6 +1,8 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -156,6 +158,7 @@ public class E extends Node {
                 !node.getNE().getBelow().get().getSW().isConnectedSW();
     }
 
+
     public static ProductionResults applyP3(E e1, E e2, E e3, E e4) {
         List<E> sorted = Arrays.asList(e1, e2, e3, e4);
         sorted.sort(Comparator.comparing(E::getOffsetX).thenComparing(E::getOffsetY));
@@ -177,5 +180,64 @@ public class E extends Node {
         checkState(se.getW().map(x -> x.equals(sw)).orElseGet(() -> false));
 
         return I.createConnectedToExistingNodesAndGetChanges(nw, sw, se, ne);
+    }
+
+    @Override
+    public List<Node> getAllChildren() {
+        List<Node> nodes = new ArrayList<>();
+        if (this.e != null) {
+            nodes.addAll(this.e.getAllChildren());
+        }
+        if (this.n != null) {
+            nodes.addAll(this.n.getAllChildren());
+        }
+        if (this.w != null) {
+            nodes.addAll(this.w.getAllChildren());
+        }
+        if (this.s != null) {
+            nodes.addAll(this.s.getAllChildren());
+        }
+        if (this.below != null) {
+            nodes.addAll(this.below.getAllChildren());
+        }
+        if (this.nw != null) {
+
+            nodes.addAll(this.nw.getAllChildren());
+        }
+        if (this.ne != null) {
+
+            nodes.addAll(this.ne.getAllChildren());
+        }
+        if (this.se != null) {
+            nodes.addAll(this.se.getAllChildren());
+        }
+        if (this.sw != null) {
+            nodes.addAll(this.sw.getAllChildren());
+        }
+        return nodes;
+
+    }
+
+    @Override
+    public List<Edge> getAllEdges() {
+        List<Optional<?>> edges = new ArrayList<>();
+        edges.add(this.getE());
+        edges.add(this.getN());
+        edges.add(this.getNE());
+        edges.add(this.getBelow());
+        edges.add(this.getNW());
+        edges.add(this.getS());
+        edges.add(this.getSE());
+        edges.add(this.getSW());
+        edges.add(this.getW());
+        Stream<?> streamOfEdges = edges.stream()
+                .filter(Optional::isPresent).map(Optional::get);
+        List<Edge> listOfEdges = streamOfEdges
+                .map(vertex -> new Edge(this, (Node) vertex))
+                .collect(Collectors.toList());
+        streamOfEdges
+                .forEach(edge -> listOfEdges.addAll(((Node) edge).getAllEdges()));
+        return listOfEdges;
+
     }
 }

@@ -1,11 +1,12 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import com.google.common.base.*;
 import com.google.common.collect.Lists;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
@@ -90,6 +91,7 @@ public class I extends Node {
                 !western.getBelow().get().getSE().isConnectedE() &&
                 !eastern.getBelow().get().getNW().isConnectedW() &&
                 !eastern.getBelow().get().getSW().isConnectedW();
+
     }
 
     private boolean canApplyP2Vertical(E northern, E southern) {
@@ -218,4 +220,56 @@ public class I extends Node {
         return ProductionResults.merge(pr1, pr2, pr3, pr4, pr5, pr6);
     }
 
+    @Override
+    public List<Node> getAllChildren() {
+        List<Node> nodes = new ArrayList<>();
+        nodes.addAll(this.nw.getAllChildren());
+        nodes.addAll(this.ne.getAllChildren());
+        nodes.addAll(this.se.getAllChildren());
+        nodes.addAll(this.sw.getAllChildren());
+        return nodes;
+    }
+
+    @Override
+    public List<Edge> getAllEdges() {
+        List<Optional<?>> edges = new ArrayList<>();
+        edges.add(this.getAbove());
+        edges.add(Optional.ofNullable(this.getNE()));
+        edges.add(Optional.ofNullable(this.getNW()));
+        edges.add(Optional.ofNullable(this.getSE()));
+        edges.add(Optional.ofNullable(this.getSW()));
+        Stream<?> streamOfEdges = edges.stream()
+                .filter(Optional::isPresent).map(Optional::get);
+        List<Edge> listOfEdges = streamOfEdges
+                .map(vertex -> new Edge(this, (Node) vertex))
+                .collect(Collectors.toList());
+        streamOfEdges
+                .forEach(edge -> listOfEdges.addAll(((Node) edge).getAllEdges()));
+        return listOfEdges;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        I i = (I) o;
+
+        if (above != null ? !above.equals(i.above) : i.above != null) return false;
+        if (nw != null ? !nw.equals(i.nw) : i.nw != null) return false;
+        if (sw != null ? !sw.equals(i.sw) : i.sw != null) return false;
+        if (se != null ? !se.equals(i.se) : i.se != null) return false;
+        return ne != null ? ne.equals(i.ne) : i.ne == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = above != null ? above.hashCode() : 0;
+        result = 31 * result + (nw != null ? nw.hashCode() : 0);
+        result = 31 * result + (sw != null ? sw.hashCode() : 0);
+        result = 31 * result + (se != null ? se.hashCode() : 0);
+        result = 31 * result + (ne != null ? ne.hashCode() : 0);
+        return result;
+    }
 }

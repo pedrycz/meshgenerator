@@ -17,13 +17,14 @@ import java.io.IOException;
 public final class MainWindowUtil {
 
     private static MainWindowController mainWindowController;
-
+    private static Stage applicationStage;
 
     private MainWindowUtil() {
     }
 
 
     public static void setMainWindowAttributes(Stage stage, String mainWindowViewResourcePath) throws IOException {
+        applicationStage = stage;
         stage.setTitle("Graph Visualizer");
 
         FXMLLoader mainLoader = new FXMLLoader(GraphVisualizer.class.getResource(mainWindowViewResourcePath));
@@ -70,4 +71,7 @@ public final class MainWindowUtil {
         });
     }
 
+    public static Stage getApplicationStage() {
+        return applicationStage;
+    }
 }

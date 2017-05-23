@@ -192,7 +192,7 @@ public class P2Test {
     }
 
     private I prepareEmptyGraf() {
-        Graph graph = new Graph();
+        Graph graph = Graph.getInstance();
         graph.getRoot().applyP1();
         return graph.getRoot().getBelow().get();
     }

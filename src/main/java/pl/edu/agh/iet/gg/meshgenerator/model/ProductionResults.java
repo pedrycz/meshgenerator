@@ -1,5 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.model;
 
+import pl.edu.agh.iet.gg.meshgenerator.visualization.controller.MainWindowController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,7 +47,6 @@ public class ProductionResults {
                     acc.addAll(list);
                     return acc;
                 });
-
 
         return new ProductionResults(nodes, edges);
     }

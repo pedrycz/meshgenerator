@@ -15,7 +15,7 @@ public class CyclicBarrierTest {
     @Test
     public void cyclicBarrierShouldThrowNoError() throws Exception {
 
-        Graph graph = new Graph();
+        Graph graph = Graph.getInstance();
 
         // level 0
 

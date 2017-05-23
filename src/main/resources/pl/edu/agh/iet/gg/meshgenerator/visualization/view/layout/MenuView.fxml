@@ -27,10 +27,10 @@
         <GroupLabel text="Serialization:"/>
 
         <MenuItemLabel GridPane.rowIndex="2" text="Serialize:"/>
-        <FullWidthButton GridPane.rowIndex="2" text="Save"/>
+        <FullWidthButton GridPane.rowIndex="2" text="Save" onMouseClicked="#save"/>
 
         <MenuItemLabel GridPane.rowIndex="3" text="Deserialize:"/>
-        <FullWidthButton GridPane.rowIndex="3" text="Open"/>
+        <FullWidthButton GridPane.rowIndex="3" text="Open" onMouseClicked="#open"/>
     </MenuGroup>
 
     <MenuGroup GridPane.rowIndex="2">
