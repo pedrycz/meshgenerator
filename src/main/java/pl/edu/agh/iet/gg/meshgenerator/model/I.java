@@ -221,12 +221,19 @@ public class I extends Node {
     }
 
     @Override
-    public List<Node> getAllChildren() {
+    public List<Node> getAllChildren(boolean fromAbove) {
         List<Node> nodes = new ArrayList<>();
-        nodes.addAll(this.nw.getAllChildren());
-        nodes.addAll(this.ne.getAllChildren());
-        nodes.addAll(this.se.getAllChildren());
-        nodes.addAll(this.sw.getAllChildren());
+        nodes.addAll(this.nw.getAllChildrenNode());
+        nodes.addAll(this.ne.getAllChildrenNode());
+        nodes.addAll(this.se.getAllChildrenNode());
+        nodes.addAll(this.sw.getAllChildrenNode());
+        if(fromAbove) {
+            nodes.add(this.nw);
+            nodes.add(this.ne);
+            nodes.add(this.se);
+            nodes.add(this.sw);
+            nodes.add(this);
+        }
         return nodes;
     }
 

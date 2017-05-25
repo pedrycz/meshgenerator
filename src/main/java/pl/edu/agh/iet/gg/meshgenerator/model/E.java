@@ -183,39 +183,47 @@ public class E extends Node {
     }
 
     @Override
-    public List<Node> getAllChildren() {
+    public List<Node> getAllChildren(boolean isAbove) {
         List<Node> nodes = new ArrayList<>();
         if (this.e != null) {
-            nodes.addAll(this.e.getAllChildren());
+            nodes.addAll(this.e.getAllChildrenNode());
         }
         if (this.n != null) {
-            nodes.addAll(this.n.getAllChildren());
+            nodes.addAll(this.n.getAllChildrenNode());
         }
         if (this.w != null) {
-            nodes.addAll(this.w.getAllChildren());
+            nodes.addAll(this.w.getAllChildrenNode());
         }
         if (this.s != null) {
-            nodes.addAll(this.s.getAllChildren());
+            nodes.addAll(this.s.getAllChildrenNode());
         }
         if (this.below != null) {
-            nodes.addAll(this.below.getAllChildren());
+            nodes.addAll(this.below.getAllChildren(true));
         }
         if (this.nw != null) {
 
-            nodes.addAll(this.nw.getAllChildren());
+            nodes.addAll(this.nw.getAllChildren(false));
         }
         if (this.ne != null) {
 
-            nodes.addAll(this.ne.getAllChildren());
+            nodes.addAll(this.ne.getAllChildren(false));
         }
         if (this.se != null) {
-            nodes.addAll(this.se.getAllChildren());
+            nodes.addAll(this.se.getAllChildren(false));
         }
         if (this.sw != null) {
-            nodes.addAll(this.sw.getAllChildren());
+            nodes.addAll(this.sw.getAllChildren(false));
         }
         return nodes;
 
+    }
+
+    public List<Node> getAllChildrenNode() {
+        List<Node> nodes = new ArrayList<>();
+        if (this.below != null) {
+            nodes.addAll(this.below.getAllChildren(true));
+        }
+        return nodes;
     }
 
     @Override

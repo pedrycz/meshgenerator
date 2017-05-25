@@ -27,7 +27,7 @@ public abstract class Node implements Serializable {
         return level;
     }
 
-    public abstract List<Node> getAllChildren();
+    public abstract List<Node> getAllChildren(boolean isAbove);
 
     public abstract List<Edge> getAllEdges();
 
