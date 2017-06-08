@@ -1,6 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.productions;
 
 import pl.edu.agh.iet.gg.meshgenerator.model.E;
+import pl.edu.agh.iet.gg.meshgenerator.model.ProductionResults;
 
 import java.util.concurrent.CyclicBarrier;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.CyclicBarrier;
 public class P1 extends Production {
 
     private E e;
+    private ProductionResults productionResults;
 
     public P1(CyclicBarrier cyclicBarrier, E e) {
         super(cyclicBarrier);
@@ -18,7 +20,12 @@ public class P1 extends Production {
 
     @Override
     public void applyProduction() {
-        e.applyP1();
+        this.productionResults = e.applyP1();
+    }
+
+    @Override
+    ProductionResults getProductionResults() {
+        return productionResults;
     }
 
 }

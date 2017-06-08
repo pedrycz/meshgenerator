@@ -3,7 +3,8 @@ package pl.edu.agh.iet.gg.meshgenerator;
 import org.junit.Test;
 import pl.edu.agh.iet.gg.meshgenerator.model.E;
 import pl.edu.agh.iet.gg.meshgenerator.model.Graph;
-import pl.edu.agh.iet.gg.meshgenerator.productions.P1;
+import pl.edu.agh.iet.gg.meshgenerator.model.I;
+import pl.edu.agh.iet.gg.meshgenerator.productions.*;
 
 import java.util.concurrent.CyclicBarrier;
 
@@ -17,7 +18,7 @@ public class CyclicBarrierTest {
 
         Graph graph = Graph.getInstance();
 
-        // level 0
+        // level 0 create
 
         E e = graph.getRoot();
 
@@ -26,7 +27,9 @@ public class CyclicBarrierTest {
         p1.start();
         barrier1.await();
 
-        //level 1
+        //level 1 create
+
+        I i = e.getBelow().get();
 
         E nw = e.getBelow().get().getNW();
         E ne = e.getBelow().get().getNE();
@@ -43,6 +46,19 @@ public class CyclicBarrierTest {
         p1se.start();
         p1sw.start();
         barrier2.await();
+
+        // level 1 merge
+
+        CyclicBarrier barrier3 = new CyclicBarrier(4+1);
+        P2a p2a = new P2a(barrier3, i, nw, ne);
+        P2b p2b = new P2b(barrier3, i, nw, sw);
+        P2c p2c = new P2c(barrier3, i, sw, se);
+        P2d p2d = new P2d(barrier3, i, ne, se);
+        p2a.start();
+        p2b.start();
+        p2c.start();
+        p2d.start();
+        barrier3.await();
 
     }
 

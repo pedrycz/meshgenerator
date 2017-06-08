@@ -1,5 +1,7 @@
 package pl.edu.agh.iet.gg.meshgenerator.productions;
 
+import pl.edu.agh.iet.gg.meshgenerator.model.ProductionResults;
+
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -14,12 +16,13 @@ public abstract class Production extends Thread {
         this.cyclicBarrier = cyclicBarrier;
     }
 
-    public abstract void applyProduction();
+    abstract void applyProduction();
+
+    abstract ProductionResults getProductionResults();
 
     @Override
     public void run() {
         applyProduction();
-
         try {
             cyclicBarrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
